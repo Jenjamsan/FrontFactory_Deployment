@@ -1,0 +1,41 @@
+version: "3.6"
+services:
+
+  teampass:
+    image: teampass:latest
+    container_name: teampass
+    restart: always
+    environment:
+      - VIRTUAL_HOST=${VIRTUAL_HOST:-localhost}
+    networks:
+      - proxy
+      - backend-teampass
+    volumes:
+      - ${LOCAL_TEAMPASS_HOME:-./volumes/teampass}:/var/www/html
+      - ${LOCAL_PHP_SESSION:-./volumes/php/session}:/var/php/session
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.teampass.rule=Host(`teampass.frontfactory.local`)"
+      - "traefik.http.routers.teampass.tls=true"
+
+  db-teampass:
+    restart: always
+    image: mysql/mysql-server:5.7
+    container_name: db
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-mypass}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-teampass}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-teampass}
+      - MYSQL_USER=${MYSQL_USER:-teampass}
+    networks:
+      - backend-teampass
+    volumes:
+      - ${LOCAL_DB_DATA:-./volumes/db}:/var/lib/mysql
+
+networks:
+  proxy:
+    external: true
+  backend-teampass:
+
+volumes:
+  postgres_data:
