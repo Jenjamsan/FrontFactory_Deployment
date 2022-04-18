@@ -1,0 +1,21 @@
+version: '3.3'
+
+services:
+  jenkins:
+    container_name: jenkins
+    image: jenkins/jenkins:lts
+    restart: always
+    networks:
+      - proxy
+    volumes:
+      - ./jenkins_home:/var/jenkins_home
+    ports:
+      - 50000:50000
+    labels:
+      - traefik.http.routers.jenkins.rule=Host(`jenkins.frontfactory.local`)
+      - traefik.enable=true
+      - traefik.http.routers.jenkins.tls=true
+      - traefik.http.services.jenkins.loadbalancer.server.port=8080
+networks:
+  proxy:
+    external: true

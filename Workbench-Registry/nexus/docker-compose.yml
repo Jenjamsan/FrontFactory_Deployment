@@ -1,0 +1,45 @@
+version: '3.3'
+
+services:
+  nexus:
+    container_name: nexus
+    image: sonatype/nexus3
+    restart: always
+    environment:
+      - "REGISTRY_HTTP_RELATIVEURLS=true"
+    networks:
+      - proxy
+    volumes:
+      - /nexus-data:/nexus-data
+    ports:
+      - 8081:8081
+      - 5000:5000
+    labels:
+      - traefik.http.routers.nexus.rule=Host(`nexus.frontfactory.local`)
+      - traefik.enable=true
+      - traefik.http.routers.nexus.tls=true
+      - traefik.http.services.nexus.loadbalancer.server.port=8081
+      - traefik.http.routers.nexus.service=nexus
+
+      - traefik.http.routers.nexus-registry.rule=Host(`nexus-registry.frontfactory.local`)
+      - traefik.http.routers.nexus-registry.tls=true
+      - traefik.http.services.nexus-registry.loadbalancer.server.port=5000
+      - traefik.http.routers.nexus-registry.service=nexus-registry
+
+  deptrack:
+    container_name: deptrack
+    image: owasp/dependency-track
+    restart: always
+    networks:
+      - proxy
+    volumes:
+      - /dependency-track:/data
+    labels:
+      - traefik.http.routers.deptrack.rule=Host(`deptrack.frontfactory.local`)
+      - traefik.enable=true
+      - traefik.http.routers.deptrack.tls=true
+      - traefik.http.services.deptrack.loadbalancer.server.port=8080
+      - traefik.http.routers.deptrack.service=deptrack
+networks:
+  proxy:
+    external: true
