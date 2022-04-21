@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "ff_delivery.name" -}}
+{{- define "ff_parsing_db.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "ff_delivery.fullname" -}}
+{{- define "ff_parsing_db.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "ff_delivery.chart" -}}
+{{- define "ff_parsing_db.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "ff_delivery.labels" -}}
-helm.sh/chart: {{ include "ff_delivery.chart" . }}
-{{ include "ff_delivery.selectorLabels" . }}
+{{- define "ff_parsing_db.labels" -}}
+helm.sh/chart: {{ include "ff_parsing_db.chart" . }}
+{{ include "ff_parsing_db.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "ff_delivery.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "ff_delivery.name" . }}
+{{- define "ff_parsing_db.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "ff_parsing_db.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "ff_delivery.serviceAccountName" -}}
+{{- define "ff_parsing_db.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "ff_delivery.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "ff_parsing_db.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}

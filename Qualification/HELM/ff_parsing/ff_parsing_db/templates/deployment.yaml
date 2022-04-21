@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ff-parsing-db
+  namespace: ff-qualification
+  labels:
+    app: ff-parsing-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ff-parsing-db
+  template:
+    metadata:
+      labels:
+        app: ff-parsing-db
+    spec:
+      containers:
+      - name: ff-parsing-db
+        image: nexus-registry.frontfactory.local/mssql/server-parsing:latest
+        ports:
+          - containerPort: 1433
+        env:
+          - name: SA_PASSWORD
+            value: Azerty@1234
+          - name: ACCEPT_EULA
+            value: "Y"
+      imagePullSecrets:
+      - name: regcred

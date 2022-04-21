@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ff-parsing-api
+  namespace: ff-qualification
+  labels:
+    app: ff-parsing-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ff-parsing-api
+  template:
+    metadata:
+      labels:
+        app: ff-parsing-api
+    spec:
+      containers:
+        - name: ff-parsing-api
+          image: nexus-registry.frontfactory.local/livrables/ff_parsing_api:latest-qualif
+          ports:
+            - name: http
+              containerPort: 80
+            - name: https
+              containerPort: 443
+          env:
+          - name: DB_CONNECTION_STRING
+            value: Data Source=ff-parsing-db-service.ff-qualification.svc.cluster.local;Initial Catalog=ff_parsing;Persist Security Info=True;User ID=sa;Password=Azerty@1234;
+      imagePullSecrets:
+        - name: regcred
