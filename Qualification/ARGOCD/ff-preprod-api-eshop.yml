@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ff-preprod-api-eshop
+spec:
+  destination:
+    name: 'ff-preprod-api-eshop'
+    namespace: ff-qualification
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: Qualification/HELM/ff_eshop/ff_eshop_api
+    repoURL: 'http://10.4.201.160:3000/frontfactory/FF_ENVIRONNEMENTS.git'
+    targetRevision: master
+  project: default

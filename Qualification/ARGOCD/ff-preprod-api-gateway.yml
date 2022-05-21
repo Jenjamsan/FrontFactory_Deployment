@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: front-qualif
+  name: ff-preprod-api-gateway
 spec:
   destination:
-    name: ''
+    name: 'ff-preprod-api-gateway'
     namespace: ff-qualification
     server: 'https://kubernetes.default.svc'
   source:
-    path: HELM/ff_eshop_frontend
-    repoURL: 'http://10.4.201.160:3000/jenjam/FF_ENVIRONNEMENTS.git'
+    path: Qualification/HELM/ff_gateway/ff_gateway_api
+    repoURL: 'http://10.4.201.160:3000/frontfactory/FF_ENVIRONNEMENTS.git'
     targetRevision: master
   project: default

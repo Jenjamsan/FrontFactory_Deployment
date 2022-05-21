@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ff-eshop-api
+  namespace: ff-qualification
+  labels:
+    app: ff-eshop-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ff-eshop-api
+  template:
+    metadata:
+      labels:
+        app: ff-eshop-api
+    spec:
+      containers:
+        - name: ff-eshop-api
+          image: nexus-registry.frontfactory.local/livrables-qualif/ff_eshop_api:latest
+          ports:
+            - name: http
+              containerPort: 80
+            - name: https
+              containerPort: 443
+          env:
+          - name: DB_CONNECTION_STRING
+            value: Data Source=ff-eshop-db-service.ff-qualification.svc.cluster.local;Initial Catalog=ff_parsing;Persist Security Info=True;User ID=sa;Password=Azerty@1234;
+      imagePullSecrets:
+        - name: regcred

@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: parser-db-qualif
+  name: ff-preprod-keycloak
 spec:
   destination:
-    name: ''
+    name: 'ff-preprod-keycloak'
     namespace: ff-qualification
     server: 'https://kubernetes.default.svc'
   source:
-    path: HELM/ff_parsing/ff_parsing_db
-    repoURL: 'http://10.4.200.151:3000/jenjam/FF_ENVIRONNEMENT_QUALIFICATION.git'
+    path: Qualification/HELM/ff_keycloak
+    repoURL: 'http://10.4.201.160:3000/frontfactory/FF_ENVIRONNEMENTS.git'
     targetRevision: master
   project: default
