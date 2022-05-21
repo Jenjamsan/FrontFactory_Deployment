@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: ff-front
-        image: nexus-registry.frontfactory.local/livrables/front:latest-qualif
+        image: nexus-registry.frontfactory.local/livrables-qualif/front:latest
         ports:
            - name: http
              containerPort: 80

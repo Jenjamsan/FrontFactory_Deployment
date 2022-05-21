@@ -7,12 +7,13 @@ metadata:
     app: ff-parsing-api
 spec:
   ports:
-    - port: 8080
+    - port: 80
       name: http
       targetPort: 80
-    - port: 8081
+    - port: 443
       name: https
       targetPort: 443
   selector:
     app: ff-parsing-api
   type: LoadBalancer
+  clusterIP: 10.99.188.98

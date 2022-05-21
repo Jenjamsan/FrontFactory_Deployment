@@ -1,3 +1,16 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: keycloak-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 3Gi
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,7 +29,7 @@ spec:
     spec:
       containers:
       - name: keycloak
-        image: nexus-registry.frontfactory.local/keycloak/keycloak:17.0.1
+        image: nexus-registry.frontfactory.local/utilitaires/keycloak:18.0.0
         args: ["start-dev"]
         env:
         - name: KEYCLOAK_ADMIN
@@ -34,6 +47,13 @@ spec:
           httpGet:
             path: /realms/master
             port: 8080
+        volumeMounts:
+          - mountPath: /opt/keycloak
+            name: keycloak-pv
+      volumes:
+        - name: keycloak-pv
+          persistentVolumeClaim:
+            claimName: keycloak-pvc
       imagePullSecrets:
       - name: regcred
 

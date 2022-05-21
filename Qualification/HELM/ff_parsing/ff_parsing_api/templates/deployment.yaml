@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: ff-parsing-api
-          image: nexus-registry.frontfactory.local/livrables/ff_parsing_api:latest-qualif
+          image: nexus-registry.frontfactory.local/livrables-qualif/ff_parsing_api:latest
           ports:
             - name: http
               containerPort: 80

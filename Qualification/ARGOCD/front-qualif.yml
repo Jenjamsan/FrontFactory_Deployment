@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: front-qualif
+spec:
+  destination:
+    name: ''
+    namespace: ff-qualification
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: HELM/ff_eshop_frontend
+    repoURL: 'http://10.4.201.160:3000/jenjam/FF_ENVIRONNEMENTS.git'
+    targetRevision: master
+  project: default

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ff-generation-api-service
+  namespace: ff-qualification
+  labels:
+    app: ff-generation-api
+spec:
+  ports:
+    - port: 80
+      name: http
+      targetPort: 80
+    - port: 443
+      name: https
+      targetPort: 443
+  selector:
+    app: ff-generation-api
+  type: LoadBalancer

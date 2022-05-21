@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: keycloak-qualif
+spec:
+  destination:
+    name: ''
+    namespace: ff-qualification
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: HELM/ff_keycloak
+    repoURL: 'http://10.4.200.151:3000/jenjam/FF_ENVIRONNEMENT_QUALIFICATION.git'
+    targetRevision: master
+  project: default

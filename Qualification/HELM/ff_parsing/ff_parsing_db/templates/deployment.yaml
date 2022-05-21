@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: ff-parsing-db
-        image: nexus-registry.frontfactory.local/mssql/server-parsing:latest
+        image: nexus-registry.frontfactory.local/utilitaires/mssql:latest
         ports:
           - containerPort: 1433
         env:
