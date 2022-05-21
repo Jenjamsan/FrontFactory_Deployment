@@ -15,5 +15,5 @@ http:
 
 tls:
   certificates:
-    - certFile: "/etc/certs/local-cert.pem"
-      keyFile: "/etc/certs/local-key.pem"
+    - certFile: "/etc/certs/_wildcard.frontfactory.local.pem"
+      keyFile: "/etc/certs/_wildcard.frontfactory.local-key.pem"

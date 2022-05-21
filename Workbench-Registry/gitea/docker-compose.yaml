@@ -1,0 +1,26 @@
+version: '3.3'
+
+services:
+  gitea:
+    container_name: gitea
+    image: gitea/gitea:latest
+    restart: always
+    networks:
+      - proxy
+    volumes:
+      - /var/lib/gitea:/data
+    ports:
+      - 222:22
+      - 3000:3000
+    labels:
+      - traefik.http.routers.gitea.rule=Host(`gitea.frontfactory.local`)
+      - traefik.enable=true
+      - traefik.http.routers.gitea.tls=true
+      - traefik.http.services.gitea.loadbalancer.server.port=3000
+    extra_hosts:
+      - "sonar.frontfactory.local:10.4.201.160"
+      - "nexus-registry.frontfactory.local:10.4.201.160"
+      - "jenkins.frontfactory.local:10.4.201.160"
+networks:
+  proxy:
+    external: true

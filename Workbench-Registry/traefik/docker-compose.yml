@@ -28,24 +28,6 @@ services:
       - "traefik.enable=true"
       # Utilise la configuration du routeur "traefik" définie dans le fichier de configuration dynamique : ./traefik/config.yml
       - "traefik.http.routers.traefik=true"
-
-  whoami:
-    image: containous/whoami
-    restart: always
-    container_name: whoami
-    security_opt:
-      - no-new-privileges:true
-    labels:
-      - "traefik.enable=true"
-      # URL pour accéder à ce conteneur
-      - "traefik.http.routers.whoami.rule=Host(`whoami.docker.localhost`)"
-      # Activation de TLS
-      - "traefik.http.routers.whoami.tls=true"
-      # Si le port est différent de 80, utilisez le service suivant:
-      # - "traefik.http.services.<service_name>.loadbalancer.server.port=<port>"
-    networks:
-      - proxy
-
 networks:
   proxy:
     external: true

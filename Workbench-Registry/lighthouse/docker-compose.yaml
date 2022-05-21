@@ -1,0 +1,17 @@
+version: '3'
+services:
+  lighthouse-server:
+    image: nginx
+    restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.lighthouse.rule=Host(`lighthouse.frontfactory.local`)"
+      - "traefik.http.routers.lighthouse.tls=true"
+    volumes:
+        - ./src:/usr/share/nginx/html
+    networks:
+        - proxy
+
+networks:
+  proxy:
+    external: true

@@ -22,6 +22,11 @@ services:
     networks:
       - proxy
       - backend-sonar
+    ports:
+      - 9000:9000
+    extra_hosts:
+      - "jenkins.frontfactory.local:10.4.201.161"
+
 
   sonarqube-db:
     image: postgres:13.4
@@ -35,19 +40,6 @@ services:
       - postgresql_data:/var/lib/postgresql/data
     networks:
       - backend-sonar
-
-  lighthouse-server:
-    image: nginx
-    restart: always
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.lighthouse.rule=Host(`lighthouse.frontfactory.local`)"
-      - "traefik.http.routers.lighthouse.tls=true"
-    volumes:
-        - ./src:/usr/share/nginx/html
-    networks:
-        - proxy
-
 
 volumes:
   postgresql_data:
