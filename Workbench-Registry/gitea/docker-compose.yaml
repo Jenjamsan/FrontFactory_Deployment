@@ -8,7 +8,7 @@ services:
     networks:
       - proxy
     volumes:
-      - /var/lib/gitea:/data
+      - /app/docker/volumes/gitea:/data
     ports:
       - 222:22
       - 3000:3000

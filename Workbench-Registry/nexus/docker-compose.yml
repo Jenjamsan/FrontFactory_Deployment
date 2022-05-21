@@ -10,7 +10,7 @@ services:
     networks:
       - proxy
     volumes:
-      - /nexus-data:/nexus-data
+      - /app/docker/volumes/nexus:/nexus-data
     ports:
       - 8081:8081
       - 5000:5000
@@ -26,20 +26,6 @@ services:
       - traefik.http.services.nexus-registry.loadbalancer.server.port=5000
       - traefik.http.routers.nexus-registry.service=nexus-registry
 
-  deptrack:
-    container_name: deptrack
-    image: owasp/dependency-track
-    restart: always
-    networks:
-      - proxy
-    volumes:
-      - /dependency-track:/data
-    labels:
-      - traefik.http.routers.deptrack.rule=Host(`deptrack.frontfactory.local`)
-      - traefik.enable=true
-      - traefik.http.routers.deptrack.tls=true
-      - traefik.http.services.deptrack.loadbalancer.server.port=8080
-      - traefik.http.routers.deptrack.service=deptrack
 networks:
   proxy:
     external: true

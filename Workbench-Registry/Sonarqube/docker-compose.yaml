@@ -25,7 +25,7 @@ services:
     ports:
       - 9000:9000
     extra_hosts:
-      - "jenkins.frontfactory.local:10.4.201.161"
+      - "jenkins.frontfactory.local:10.4.201.160"
 
 
   sonarqube-db:

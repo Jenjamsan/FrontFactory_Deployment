@@ -9,7 +9,7 @@ services:
     networks:
       - proxy
     volumes:
-      - ./jenkins_home:/var/jenkins_home
+      - /app/docker/volumes/jenkins:/var/jenkins_home
     ports:
       - 50000:50000
       - 8800:8080
