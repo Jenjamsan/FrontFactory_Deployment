@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: ff-preprod-db-parser-pvc
+  name: ff-preprod-api-generation-pvc
   namespace: ff-qualification
 spec:
   storageClassName: nfs
