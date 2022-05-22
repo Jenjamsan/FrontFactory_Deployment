@@ -29,10 +29,10 @@ spec:
               memory: 750Mi
           volumeMounts:
             - mountPath: /mnt/ff-frontend-qualif
-              name: ff-qualif-generation-pv
+              name: ff-preprod-api-generation-pv
       volumes:
-        - name: ff-qualif-generation-pv
+        - name: ff-preprod-api-generation-pv
           persistentVolumeClaim:
-            claimName: ff-qualif-generation-pvc
+            claimName: ff-preprod-api-generation-pvc
       imagePullSecrets:
         - name: regcred
