@@ -4,11 +4,11 @@ metadata:
   name: ff-preprod-front-eshop
 spec:
   destination:
-    name: 'ff-preprod-front-eshop'
+    name: ''
     namespace: ff-qualification
     server: 'https://kubernetes.default.svc'
   source:
     path: Qualification/HELM/ff_eshop/ff_eshop_frontend
-    repoURL: 'http://10.4.201.160:3000/frontfactory/FF_ENVIRONNEMENTS.git'
-    targetRevision: master
+    repoURL: 'http://10.4.201.160:3000/frontfactory/FrontFactory_Environnements'
+    targetRevision: main
   project: default
