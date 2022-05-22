@@ -48,12 +48,12 @@ spec:
             path: /realms/master
             port: 8080
         volumeMounts:
-          - mountPath: /opt/keycloak
-            name: keycloak-pv
+            - mountPath: /opt/keycloak
+              name: ff-preprod-keycloak-pv
       volumes:
-        - name: keycloak-pv
+        - name: ff-preprod-keycloak-pv
           persistentVolumeClaim:
-            claimName: keycloak-pvc
+            claimName: ff-preprod-keycloak-pvc
       imagePullSecrets:
-      - name: regcred
+        - name: regcred
 

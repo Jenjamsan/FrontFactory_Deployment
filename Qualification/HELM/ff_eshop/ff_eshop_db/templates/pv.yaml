@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: ff-qualif-keycloak-pv
+  name: ff-preprod-db-eshop-pv
   namespace: ff-qualification
 spec:
   capacity:
-    storage: 1Gi
+    storage: 5Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteMany
@@ -15,5 +15,5 @@ spec:
     - hard
     - nfsvers=4.1
   nfs:
-    path: /mnt/ff-preprod-keycloak
+    path: /mnt/ff-preprod-db-eshop
     server: 10.4.201.160
