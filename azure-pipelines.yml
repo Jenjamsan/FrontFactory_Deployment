@@ -17,7 +17,7 @@ steps:
     azureResourceManagerConnection: $(azureResourceManagerConnection)
     subscriptionId: $(subscriptionId)
     action: 'Create Or Update Resource Group'
-    resourceGroupName: 'frontfactoryprod'
+    resourceGroupName: $(Azure_ResourceGroup)
     location: 'West Europe'
     templateLocation: 'Linked artifact'
     csmFile: 'Production/FF_KEYVAULT/template.json'
@@ -32,7 +32,7 @@ steps:
      azureResourceManagerConnection: $(azureResourceManagerConnection)
      subscriptionId: $(subscriptionId)
      action: 'Create Or Update Resource Group'
-     resourceGroupName: 'frontfactoryprod'
+     resourceGroupName: $(Azure_ResourceGroup)
      location: 'West Europe'
      templateLocation: 'Linked artifact'
      csmFile: 'Production/FF_ACR/template.json'
@@ -45,9 +45,9 @@ steps:
   inputs:
     deploymentScope: 'Resource Group'
     azureResourceManagerConnection: $(azureResourceManagerConnection)
-    subscriptionId: $(subscriptionId)
+    subscriptionId: $(Azure_ResourceGroup)
     action: 'Create Or Update Resource Group'
-    resourceGroupName: 'frontfactoryprod'
+    resourceGroupName: 'frontfactory'
     location: 'West Europe'
     templateLocation: 'Linked artifact'
     csmFile: 'Production/FF_AKS/azuredeploy.json'
