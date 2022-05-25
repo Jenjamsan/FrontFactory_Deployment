@@ -16,4 +16,4 @@ spec:
   selector:
     app: ff-gateway-api
   type: ClusterIP
-  ClusterIP: 10.0.7.162
+  clusterIP: 10.0.7.162

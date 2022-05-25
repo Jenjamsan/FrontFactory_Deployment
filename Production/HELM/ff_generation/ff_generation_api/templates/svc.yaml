@@ -16,4 +16,4 @@ spec:
   selector:
     app: ff-generation-api
   type: ClusterIP
-  ClusterIP: 10.0.7.163
+  clusterIP: 10.0.7.163
