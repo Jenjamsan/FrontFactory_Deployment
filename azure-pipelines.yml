@@ -42,9 +42,9 @@ steps:
   inputs:
     deploymentScope: 'Resource Group'
     azureResourceManagerConnection: $(azureResourceManagerConnection)
-    subscriptionId: $(Azure_ResourceGroup)
+    subscriptionId: $(subscriptionId)
     action: 'Create Or Update Resource Group'
-    resourceGroupName: 'frontfactory'
+    resourceGroupName: $(Azure_ResourceGroup)
     location: 'West Europe'
     templateLocation: 'Linked artifact'
     csmFile: 'Production/FF_AKS/azuredeploy.json'
