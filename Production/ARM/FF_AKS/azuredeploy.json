@@ -1,0 +1,54 @@
+
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+          "type": "string"
+        }
+    },
+    "resources": [{
+      "name": "[parameters('name')]",
+      "type": "Microsoft.ContainerService/managedClusters",
+      
+      "identity": {
+          "type": "SystemAssigned" 
+      },
+      "apiVersion": "2021-03-01",
+      "location": "australiacentral",
+      "properties": {
+        "kubernetesVersion": "1.22.6",
+        "enableRBAC": true,
+        "dnsPrefix": "dnsprefix",
+        "agentPoolProfiles": [
+          {
+            "name": "agentpool",
+            "count": 1,
+            "vmSize": "Standard_B2s",
+            "osType": "Linux",
+            "storageProfile": "ManagedDisks",
+            "mode": "System"
+          }
+        ],
+  
+        "networkProfile": {
+           "networkPlugin": "kubenet",
+           "networkPolicy": "calico"
+          },
+        
+        "linuxProfile": {
+          "adminUsername": "jenjam",
+          "ssh": {
+            "publicKeys": [
+              {
+                "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCmeRIaJOYuOb7SKgilAmhRiCdkDcIqcQzXH6hzDwJ62bvVHAp9Ht1Dqq5jSbW8r9GXOquP4GgW912xy26cT9BGGR7lqJyDBIi0iGgKOoQujLKtNh2t4dDXM0/5ijMnFiTRhottad7s7I8IwD+fCppBR+Kfb+ZguOUdHKsty1RAWuXfZi3U5EX5B7UBZbUBPUvsUkgg1KU+jIPAJ9WJgBG4bCtZmC1mcoOcCIgrPhabSr1wRtlK/M/4wxwTXS88v+CZkJ9AKRJqQbBBnDol+YNgs0qqls6Kq9d+yybVrG6vznXf/kXq+qYWsYC/w3mw4QPXbU9RT13Jij1aHHezC/nj"
+              }
+            ]
+          }
+        },
+        "servicePrincipalProfile": {
+             "clientId": "msi"
+        }
+      }
+    }]
+  }
