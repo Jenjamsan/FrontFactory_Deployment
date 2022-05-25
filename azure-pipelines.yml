@@ -22,7 +22,7 @@ steps:
     templateLocation: 'Linked artifact'
     csmFile: 'Production/FF_KEYVAULT/template.json'
     csmParametersFile: 'Production/FF_KEYVAULT/parameters.json'
-    overrideParameters: -secret1_value $(AuthenticationUsername)
+    overrideParameters: -secret1_value toto
     deploymentMode: 'Incremental'
 
 - task: AzureResourceManagerTemplateDeployment@3
