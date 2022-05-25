@@ -14,7 +14,7 @@ spec:
         backend:
           service:
             name: ff-front-service
-            port: 80
-              name: frontfactory
+            port:
+              number: 80
 
               
