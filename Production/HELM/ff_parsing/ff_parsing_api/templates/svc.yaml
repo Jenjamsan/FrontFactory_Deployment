@@ -16,4 +16,4 @@ spec:
   selector:
     app: ff-parsing-api
   type: ClusterIP
-  ClusterIP: 10.0.7.165
+  clusterIP: 10.0.7.165
