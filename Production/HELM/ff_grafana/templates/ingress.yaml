@@ -8,10 +8,9 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host:
-    http:
+  - http:
       paths:
-      - path: /grafana
+      - path: /
         pathType: Prefix
         backend:
           service:
