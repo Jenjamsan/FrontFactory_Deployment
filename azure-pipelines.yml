@@ -7,20 +7,20 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-# - task: AzureResourceManagerTemplateDeployment@3
-#   name: Part1_Keyvault
-#   inputs:
-#     deploymentScope: 'Resource Group'
-#     azureResourceManagerConnection: $(azureResourceManagerConnection)
-#     subscriptionId: $(subscriptionId)
-#     action: 'Create Or Update Resource Group'
-#     resourceGroupName: $(Azure_ResourceGroup)
-#     location: 'West Europe'
-#     templateLocation: 'Linked artifact'
-#     csmFile: 'Production/FF_KEYVAULT/template.json'
-#     csmParametersFile: 'Production/FF_KEYVAULT/parameters.json'
-#     overrideParameters: -secret1_value toto
-#     deploymentMode: 'Incremental'
+- task: AzureResourceManagerTemplateDeployment@3
+  name: Part1_Keyvault
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: $(azureResourceManagerConnection)
+    subscriptionId: $(subscriptionId)
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: $(Azure_ResourceGroup)
+    location: 'West Europe'
+    templateLocation: 'Linked artifact'
+    csmFile: 'Production/FF_KEYVAULT/azuredeploy.json'
+    csmParametersFile: 'Production/FF_KEYVAULT/azuredeploy.parameters.json'
+    overrideParameters: -secret1_value toto
+    deploymentMode: 'Incremental'
 
 - task: AzureResourceManagerTemplateDeployment@3
   name: Part2_A_Container_Registry
@@ -32,8 +32,8 @@ steps:
      resourceGroupName: $(Azure_ResourceGroup)
      location: 'West Europe'
      templateLocation: 'Linked artifact'
-     csmFile: 'Production/FF_ACR/template.json'
-     csmParametersFile: 'Production/FF_ACR/parameters.json'
+     csmFile: 'Production/FF_ACR/azuredeploy.json'
+     csmParametersFile: 'Production/FF_ACR/azuredeploy.parameters.json'
      deploymentMode: 'Incremental'
 
 
@@ -42,69 +42,69 @@ steps:
   inputs:
     deploymentScope: 'Resource Group'
     azureResourceManagerConnection: $(azureResourceManagerConnection)
-    subscriptionId: $(Azure_ResourceGroup)
+    subscriptionId: $(subscriptionId)
     action: 'Create Or Update Resource Group'
-    resourceGroupName: 'frontfactory'
+    resourceGroupName: $(Azure_ResourceGroup)
     location: 'West Europe'
     templateLocation: 'Linked artifact'
     csmFile: 'Production/FF_AKS/azuredeploy.json'
     csmParametersFile: 'Production/FF_AKS/azuredeploy.parameters.json'
     deploymentMode: 'Incremental'
 
-# - task: AzureCLI@2
-#   name: cli
-#   continueOnError: true
-#   inputs:
-#     azureSubscription: $(azureResourceManagerConnection)
-#     scriptType: 'bash'
-#     scriptLocation: 'inlineScript'
-#     arguments: '$(Azure_ResourceGroup)'
-#     inlineScript: |
-#       az extension add --name aks-preview
-#       az extension update --name aks-preview
-#       export AKS_NAME=aksff
-#       export RG=$1
-#       export AKV=akvff
+- task: AzureCLI@2
+  name: cli
+  continueOnError: true
+  inputs:
+    azureSubscription: $(azureResourceManagerConnection)
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    arguments: '$(Azure_ResourceGroup)'
+    inlineScript: |
+      az extension add --name aks-preview
+      az extension update --name aks-preview
+      export AKS_NAME=aksff
+      export RG=$1
+      export AKV=akvff
 
-#        export IDENT_NAME="app-identity-$AKS_NAME" 
-#        export POD_IDENTITY_NAME="pod-identity-aksff"
-#        export POD_IDENTITY_NAMESPACE="namespace-aksff"      
-#        az aks enable-addons --addons azure-keyvault-secrets-provider --name $AKS_NAME --resource-group $RG
+       export IDENT_NAME="app-identity-$AKS_NAME" 
+       export POD_IDENTITY_NAME="pod-identity-aksff"
+       export POD_IDENTITY_NAMESPACE="namespace-aksff"      
+       az aks enable-addons --addons azure-keyvault-secrets-provider --name $AKS_NAME --resource-group $RG
       
-#        az aks update -g $RG -n $AKS_NAME --enable-pod-identity --enable-pod-identity-with-kubenet
+       az aks update -g $RG -n $AKS_NAME --enable-pod-identity --enable-pod-identity-with-kubenet
       
-#        echo "3"
-#        az feature register --name EnablePodIdentityPreview --namespace Microsoft.ContainerService
+       echo "3"
+       az feature register --name EnablePodIdentityPreview --namespace Microsoft.ContainerService
       
-#        echo "4"
-#        az provider register -n Microsoft.ContainerService
+       echo "4"
+       az provider register -n Microsoft.ContainerService
       
-#        echo "5"
-#        az identity create --resource-group $RG --name $IDENT_NAME
+       echo "5"
+       az identity create --resource-group $RG --name $IDENT_NAME
       
-#        echo "6"
-#        export IDENTITY_CLIENT_ID="$(az identity show -g $RG -n $IDENT_NAME --query clientId -otsv)"
+       echo "6"
+       export IDENTITY_CLIENT_ID="$(az identity show -g $RG -n $IDENT_NAME --query clientId -otsv)"
       
-#        echo "7"
-#        export IDENTITY_RESOURCE_ID="$(az identity show -g $RG -n $IDENT_NAME --query id -otsv)"
+       echo "7"
+       export IDENTITY_RESOURCE_ID="$(az identity show -g $RG -n $IDENT_NAME --query id -otsv)"
       
-#        echo "8"
-#        export NODE_GROUP="$(az aks show -g $RG -n $AKS_NAME --query nodeResourceGroup -otsv)"
+       echo "8"
+       export NODE_GROUP="$(az aks show -g $RG -n $AKS_NAME --query nodeResourceGroup -otsv)"
       
-#        echo "9"
-#        export NODES_RESOURCE_ID="$(az group show -n $NODE_GROUP -o tsv --query "id")"
+       echo "9"
+       export NODES_RESOURCE_ID="$(az group show -n $NODE_GROUP -o tsv --query "id")"
       
-#        echo "10"
-#        az login -u $(Azure_login) -p $(Azure_password) 
-#        az role assignment create --role "Virtual Machine Contributor" --assignee-object-id $IDENTITY_CLIENT_ID --assignee-principal-type ServicePrincipal --scope $NODES_RESOURCE_ID
+       echo "10"
+       az login -u $(Azure_login) -p $(Azure_password) 
+       az role assignment create --role "Virtual Machine Contributor" --assignee-object-id $IDENTITY_CLIENT_ID --assignee-principal-type ServicePrincipal --scope $NODES_RESOURCE_ID
       
-#        echo "11"
-#        az aks pod-identity add --resource-group $RG --cluster-name $AKS_NAME --namespace $POD_IDENTITY_NAMESPACE --name $POD_IDENTITY_NAME --identity-resource-id $IDENTITY_RESOURCE_ID
+       echo "11"
+       az aks pod-identity add --resource-group $RG --cluster-name $AKS_NAME --namespace $POD_IDENTITY_NAMESPACE --name $POD_IDENTITY_NAME --identity-resource-id $IDENTITY_RESOURCE_ID
       
-#        echo "12"
-#        az keyvault set-policy -n $AKV --key-permissions get --spn $IDENTITY_CLIENT_ID
-#        az keyvault set-policy -n $AKV --secret-permissions get --spn $IDENTITY_CLIENT_ID
-#        az keyvault set-policy -n $AKV --certificate-permissions get --spn $IDENTITY_CLIENT_ID
+       echo "12"
+       az keyvault set-policy -n $AKV --key-permissions get --spn $IDENTITY_CLIENT_ID
+       az keyvault set-policy -n $AKV --secret-permissions get --spn $IDENTITY_CLIENT_ID
+       az keyvault set-policy -n $AKV --certificate-permissions get --spn $IDENTITY_CLIENT_ID
        
 - task: AzureCLI@2
   name: cli4

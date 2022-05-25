@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ff-front
+  namespace: ff-production
+  labels:
+    app: ff-front
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ff-front
+  template:
+    metadata:
+      labels:
+        app: ff-front
+    spec:
+      containers:
+      - name: ff-front
+        image: acrff.azurecr.io/livrables-production/front:latest
+        ports:
+           - name: http
+             containerPort: 80
+           - name: https
+             containerPort: 443
+        env:
+          - name: parserApiBaseUrl
+            value: ff-parsing-api-service.ff-production.svc.cluster.local
