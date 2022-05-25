@@ -15,5 +15,5 @@ spec:
       targetPort: 443
   selector:
     app: ff-front
-  type: clusterIp
-  clusterIP: 10.0.7.161
+  type: ClusterIP
+  ClusterIP: 10.0.7.161

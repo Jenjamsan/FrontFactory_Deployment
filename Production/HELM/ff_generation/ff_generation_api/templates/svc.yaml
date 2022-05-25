@@ -15,5 +15,5 @@ spec:
       targetPort: 443
   selector:
     app: ff-generation-api
-  type: clusterIP
-  clusterIP: 10.0.7.163
+  type: ClusterIP
+  ClusterIP: 10.0.7.163
