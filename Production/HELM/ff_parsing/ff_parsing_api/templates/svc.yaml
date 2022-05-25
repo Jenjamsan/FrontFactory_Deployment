@@ -15,5 +15,5 @@ spec:
       targetPort: 443
   selector:
     app: ff-parsing-api
-  type: clusterIP
-  clusterIP: 10.0.7.165
+  type: ClusterIP
+  ClusterIP: 10.0.7.165
