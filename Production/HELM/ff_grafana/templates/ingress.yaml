@@ -8,7 +8,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: 20.213.238.64
+  - host: frontfactory.australiacentral.cloudapp.azure.com
     http:
       paths:
       - path: /grafana
