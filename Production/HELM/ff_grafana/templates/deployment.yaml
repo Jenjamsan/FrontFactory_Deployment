@@ -61,5 +61,5 @@ spec:
     app: grafana
   sessionAffinity: None
   type: ClusterIP
-  ClusterIP: 10.0.6.160
+  clusterIP: 10.0.6.160
 
