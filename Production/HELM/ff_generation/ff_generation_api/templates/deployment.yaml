@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ff-generation-api
+  namespace: ff-production
+  labels:
+    app: ff-generation-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ff-generation-api
+  template:
+    metadata:
+      labels:
+        app: ff-generation-api
+    spec:
+      containers:
+        - name: ff-generation-api
+          image: acrff.azurecr.io/livrables-production/ff_generation_api:latest
+          ports:
+            - name: http
+              containerPort: 80
+            - name: https
+              containerPort: 443
+          resources:
+            requests:
+              cpu: 250m
+              memory: 750Mi

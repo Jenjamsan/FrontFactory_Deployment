@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ff-eshop-db
+  namespace: ff-production
+  labels:
+    app: ff-eshop-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ff-eshop-db
+  template:
+    metadata:
+      labels:
+        app: ff-eshop-db
+    spec:
+      containers:
+        - name: ff-eshop-db
+          image: acrff.azurecr.io/utilitaires/mssql:latest
+          ports:
+            - containerPort: 1433
+          env:
+            - name: SA_PASSWORD
+              value: Azerty@1234
+            - name: ACCEPT_EULA
+              value: "Y"
