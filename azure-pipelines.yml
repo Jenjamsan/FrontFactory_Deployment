@@ -18,7 +18,7 @@ steps:
     subscriptionId: $(subscriptionId)
     action: 'Create Or Update Resource Group'
     resourceGroupName: 'frontfactoryprod'
-    location: 'North Central US'
+    location: 'West Europe'
     templateLocation: 'Linked artifact'
     csmFile: 'Production/FF_KEYVAULT/template.json'
     csmParametersFile: 'Production/FF_KEYVAULT/parameters.json'
@@ -33,7 +33,7 @@ steps:
      subscriptionId: $(subscriptionId)
      action: 'Create Or Update Resource Group'
      resourceGroupName: 'frontfactoryprod'
-     location: 'North Central US'
+     location: 'West Europe'
      templateLocation: 'Linked artifact'
      csmFile: 'Production/FF_ACR/template.json'
      csmParametersFile: 'Production/FF_ACR/parameters.json'
@@ -48,7 +48,7 @@ steps:
     subscriptionId: $(subscriptionId)
     action: 'Create Or Update Resource Group'
     resourceGroupName: 'frontfactoryprod'
-    location: 'North Central US'
+    location: 'West Europe'
     templateLocation: 'Linked artifact'
     csmFile: 'Production/FF_AKS/azuredeploy.json'
     csmParametersFile: 'Production/FF_AKS/azuredeploy.parameters.json'
