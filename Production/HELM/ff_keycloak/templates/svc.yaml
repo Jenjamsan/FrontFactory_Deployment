@@ -15,4 +15,4 @@ spec:
   selector:
     app: keycloak
   type: ClusterIP
-  ClusterIP: 10.0.7.164
+  clusterIP: 10.0.7.164

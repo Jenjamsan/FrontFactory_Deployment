@@ -16,4 +16,4 @@ spec:
   selector:
     app: ff-eshop-api
   type: ClusterIP
-  ClusterIP: 10.0.7.160
+  clusterIP: 10.0.7.160

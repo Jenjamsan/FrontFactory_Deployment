@@ -16,4 +16,4 @@ spec:
   selector:
     app: ff-front
   type: ClusterIP
-  ClusterIP: 10.0.7.161
+  clusterIP: 10.0.7.161
