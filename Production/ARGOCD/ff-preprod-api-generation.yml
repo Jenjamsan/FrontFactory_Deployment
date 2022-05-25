@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ff-prod-api-generation
+spec:
+  destination:
+    name: ''
+    namespace: ff-production
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: Production/HELM/ff_generation/ff_generation_api
+    repoURL: 'https://dev.azure.com/ProjetsD2022/Projet%20fin%20de%20cycle%20-%20DI3%20%202022/_git/FrontFactory_Environnements'
+    targetRevision: main
+  project: default
