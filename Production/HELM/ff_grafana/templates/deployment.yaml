@@ -60,6 +60,3 @@ spec:
   selector:
     app: grafana
   sessionAffinity: None
-  type: ClusterIP
-  clusterIP: 10.0.6.160
-
