@@ -15,5 +15,5 @@ spec:
       targetPort: 443
   selector:
     app: ff-generation-api
-  type: LoadBalancerIP
+  type: LoadBalancer
   clusterIP: 10.0.7.163
