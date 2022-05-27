@@ -17,3 +17,4 @@ spec:
     app: ff-front
   type: LoadBalancer
   clusterIP: 10.0.7.161
+  loadBalancerIP: 20.213.232.31
