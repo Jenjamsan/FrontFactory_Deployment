@@ -15,4 +15,4 @@ spec:
                 name: ff-front-service
                 port:
                   number: 80
-            path: /front
+            path: /

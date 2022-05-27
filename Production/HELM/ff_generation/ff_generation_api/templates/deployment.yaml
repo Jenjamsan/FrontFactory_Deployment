@@ -23,6 +23,13 @@ spec:
               containerPort: 80
             - name: https
               containerPort: 443
+          env:
+          - name: JWT_AUTHORITY
+            value: http://20.37.0.159:8080/realms/frontfactory
+          - name: JWT_AUDIENCE
+            value: account
+          - name: PARSING_BASE_URL
+            value: http://20.213.242.133/parser/v1.0
           resources:
             requests:
               cpu: 250m
