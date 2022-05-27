@@ -14,5 +14,5 @@ spec:
       targetPort: 8443
   selector:
     app: keycloak
-  type: ClusterIP
+  type: LoadBalancer
   clusterIP: 10.0.7.164
