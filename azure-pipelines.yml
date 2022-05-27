@@ -17,8 +17,8 @@ steps:
     resourceGroupName: $(Azure_ResourceGroup)
     location: 'West Europe'
     templateLocation: 'Linked artifact'
-    csmFile: 'Production/FF_KEYVAULT/azuredeploy.json'
-    csmParametersFile: 'Production/FF_KEYVAULT/azuredeploy.parameters.json'
+    csmFile: 'Production/ARM/FF_KEYVAULT/azuredeploy.json'
+    csmParametersFile: 'Production/ARM/FF_KEYVAULT/azuredeploy.parameters.json'
     overrideParameters: -secret1_value toto
     deploymentMode: 'Incremental'
 
@@ -32,8 +32,8 @@ steps:
      resourceGroupName: $(Azure_ResourceGroup)
      location: 'West Europe'
      templateLocation: 'Linked artifact'
-     csmFile: 'Production/FF_ACR/azuredeploy.json'
-     csmParametersFile: 'Production/FF_ACR/azuredeploy.parameters.json'
+     csmFile: 'Production/ARM/FF_ACR/azuredeploy.json'
+     csmParametersFile: 'Production/ARM/FF_ACR/azuredeploy.parameters.json'
      deploymentMode: 'Incremental'
 
 
@@ -47,8 +47,8 @@ steps:
     resourceGroupName: $(Azure_ResourceGroup)
     location: 'West Europe'
     templateLocation: 'Linked artifact'
-    csmFile: 'Production/FF_AKS/azuredeploy.json'
-    csmParametersFile: 'Production/FF_AKS/azuredeploy.parameters.json'
+    csmFile: 'Production/ARM/FF_AKS/azuredeploy.json'
+    csmParametersFile: 'Production/ARM/FF_AKS/azuredeploy.parameters.json'
     deploymentMode: 'Incremental'
 
 - task: AzureCLI@2
