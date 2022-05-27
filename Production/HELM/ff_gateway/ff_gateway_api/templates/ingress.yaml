@@ -15,4 +15,4 @@ spec:
                   name: ff-gateway-api-service
                   port:
                     number: 80
-              path: /gw
+              path: /
