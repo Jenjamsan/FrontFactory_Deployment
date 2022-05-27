@@ -4,11 +4,10 @@ metadata:
   name: ff-parsing-db-service
   namespace: ff-production
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: ff-parsing-db
   ports:
     - port: 1433
       targetPort: 1433
       name: sqlport
-  type: LoadBalancer
