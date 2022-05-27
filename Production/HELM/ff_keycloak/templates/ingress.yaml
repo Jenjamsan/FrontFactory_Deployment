@@ -15,4 +15,4 @@ apiVersion: networking.k8s.io/v1
                   name: keycloak
                   port:
                     number: 8080
-              path: /
+              path: /keycloak
