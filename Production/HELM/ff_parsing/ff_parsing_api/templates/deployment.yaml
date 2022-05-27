@@ -26,3 +26,7 @@ spec:
           env:
           - name: DB_CONNECTION_STRING
             value: Data Source=ff-parsing-db-service.ff-production.svc.cluster.local;Initial Catalog=ff_parsing;Persist Security Info=True;User ID=sa;Password=Azerty@1234;
+          - name: JWT_AUTHORITY
+            value: http://20.37.0.159:8080/realms/frontfactory
+          - name: JWT_AUDIENCE
+            value: account
