@@ -1,0 +1,34 @@
+pool:
+  name: Azure Pipelines
+#Your build pipeline references a secret variable named ‘USER_PASSWORD’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it secret. See https://go.microsoft.com/fwlink/?linkid=865972
+
+steps:
+- task: AzureCLI@2
+  displayName: 'Azure CLI '
+  inputs:
+    azureSubscription: 'Azure for Students (25fd2547-387b-4b6e-bdbc-e94b0a03af2a)'
+    scriptType: ps
+    scriptLocation: inlineScript
+    inlineScript: 'az login -u ${USER_LOGIN} -p $(USER_PASSWORD)'
+    arguments: '$USER_'
+
+- task: AammirMirza.CP-AzureVMStartStop.AzureVMStartStop-Task.AzureVMStartStop@1
+  displayName: 'Azure VM Start/Stop'
+  inputs:
+    VMList: '''aks-agentpool-54707845-vmss'''
+    ResourceGroupName: 'MC_frontfactory_aksff_australiacentral'
+    Action: Stop
+    ConnectedServiceName: frontfactoryprod
+
+- task: keesschollaart.AzureCostInsights.AzureCostInsightsWidget.DownloadTask.DownloadCostData@1
+  displayName: 'Download cost data e6a8831f-7f2c-4d16-ad3f-cf0d32ca1703'
+  inputs:
+    ConnectedServiceNameARM: 'Azure for Students (25fd2547-387b-4b6e-bdbc-e94b0a03af2a)'
+    apiToUse: usage
+    offerType: 'MS-AZR-0017G'
+    currency: EUR
+    locale: 'fr-EU'
+    regioInfo: FR
+
+- task: keesschollaart.AzureCostInsights.AzureCostInsightsWidget.PublishTask.PublishCostData@1
+  displayName: 'Publish Cost Data'
