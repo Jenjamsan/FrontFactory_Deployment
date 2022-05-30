@@ -1,19 +1,19 @@
 pool:
-  vmImage: windows-2019
+  vmImage: ubuntu-latest
 
 steps:
-
 - task: AzureCLI@2
   inputs:
-    azureSubscription: 'Azure for Students (25fd2547-387b-4b6e-bdbc-e94b0a03af2a)'
+    azureSubscription: $(azureResourceManagerConnection)
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
-    arguments: '$(USER_LOGIN) $(USER_PASSWORD)'
-    inlineScript: 'az login -u $1 -p $2'
-    
-- task: AzureVMStartStop@1
-  inputs:
-    VMList: '''aks-agentpool-54707845-vmss'''
-    ResourceGroupName: 'MC_frontfactory_aksff_australiacentral'
-    Action: 'Stop'
-    ConnectedServiceName: 'Azure for Students (25fd2547-387b-4b6e-bdbc-e94b0a03af2a)'
+    arguments: '$(Azure_ResourceGroup) $(AKS)'
+    inlineScript: |
+      AKS_To_Start=$(az aks list -g $1 --query [].name -otsv)
+      if [ $2 == false ]
+        then
+          az aks start -g $1 -n $AKS_To_Start
+      elif [ $2 == true ]
+        then
+          az aks stop -g $1 -n $AKS_To_Start
+      fi
