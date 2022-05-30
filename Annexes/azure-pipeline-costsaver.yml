@@ -17,17 +17,3 @@ steps:
     ResourceGroupName: 'MC_frontfactory_aksff_australiacentral'
     Action: 'Stop'
     ConnectedServiceName: 'Azure for Students (25fd2547-387b-4b6e-bdbc-e94b0a03af2a)'
-
-
-- task: DownloadCostData@1
-  inputs:
-    ConnectedServiceNameARM: 'Azure for Students (25fd2547-387b-4b6e-bdbc-e94b0a03af2a)'
-    DaysToDownload: '60'
-    apiToUse: 'usage'
-    offerType: 'MS-AZR-0017G'
-    currency: 'EUR'
-    locale: 'fr-EU'
-    regioInfo: 'FR'
-    filter: 'no'
-
-- task: PublishCostData@1
