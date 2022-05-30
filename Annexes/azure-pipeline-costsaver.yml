@@ -1,6 +1,5 @@
 pool:
-  name: Azure Pipelines
-#Your build pipeline references a secret variable named ‘USER_PASSWORD’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it secret. See https://go.microsoft.com/fwlink/?linkid=865972
+  vmImage: windows-2019
 
 steps:
 
