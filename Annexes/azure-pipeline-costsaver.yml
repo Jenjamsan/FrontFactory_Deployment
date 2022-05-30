@@ -13,7 +13,7 @@ steps:
     
 - task: AzureVMStartStop@1
   inputs:
-    VMList: 'aks-agentpool-54707845-vmss'
+    VMList: '''aks-agentpool-54707845-vmss'''
     ResourceGroupName: 'MC_frontfactory_aksff_australiacentral'
     Action: 'Stop'
     ConnectedServiceName: 'Azure for Students (25fd2547-387b-4b6e-bdbc-e94b0a03af2a)'
