@@ -7,13 +7,7 @@ steps:
     azureSubscription: $(azureResourceManagerConnection)
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
-    arguments: '$(Azure_ResourceGroup) $(AKS)'
+    arguments: '$(Azure_ResourceGroup)'
     inlineScript: |
       AKS_To_Start=$(az aks list -g $1 --query [].name -otsv)
-      if [ $2 == false ]
-        then
-          az aks start -g $1 -n $AKS_To_Start
-      elif [ $2 == true ]
-        then
-          az aks stop -g $1 -n $AKS_To_Start
-      fi
+      az aks stop -g $1 -n $AKS_To_Start
