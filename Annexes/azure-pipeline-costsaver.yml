@@ -1,17 +1,16 @@
 pool:
-  vmImage: windows-2019
+  vmImage: ubuntu-latest
 
 steps:
 
 - task: AzureCLI@2
   inputs:
     azureSubscription: 'Azure for Students (25fd2547-387b-4b6e-bdbc-e94b0a03af2a)'
-    scriptType: 'ps'
+    scriptType: 'bash'
     scriptLocation: 'inlineScript'
-    inlineScript: 'az login -u $1 -p $2'
     arguments: '$(USER_LOGIN) $(USER_PASSWORD)'
-
-
+    inlineScript: 'az login -u $1 -p $2'
+    
 - task: AzureVMStartStop@1
   inputs:
     VMList: 'aks-agentpool-54707845-vmss'
