@@ -10,11 +10,11 @@ spec:
   selector:
     matchLabels:
       app: ff-parsing-api
-      aadpodidbinding: pod-identity-aksff
   template:
     metadata:
       labels:
         app: ff-parsing-api
+        aadpodidbinding: pod-identity-aksff
     spec:
       containers:
         - name: ff-parsing-api
