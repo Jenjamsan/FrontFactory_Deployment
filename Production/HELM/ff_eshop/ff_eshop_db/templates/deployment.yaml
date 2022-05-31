@@ -29,6 +29,8 @@ spec:
       labels:
         app: ff-eshop-db
     spec:
+      securityContext:
+        fsGroup: 10001
       containers:
         - name: ff-eshop-db
           image: acrff.azurecr.io/utilitaires/mssql:latest
