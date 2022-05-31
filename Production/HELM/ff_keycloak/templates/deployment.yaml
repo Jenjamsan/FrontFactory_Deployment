@@ -31,7 +31,7 @@ spec:
             httpGet:
               path: /realms/master
               port: 8080
-          command: ["/bin/sh", "-c", "export KEYCLOAK_ADMIN=$(cat /mnt/secret-store/FF-KEYCLOAK-ADMIN); export KEYCLOAK_ADMIN_PASSWORD=$(cat /mnt/secret-store/FF-KEYCLOAK-ADMIN-PASSWORD); /opt/jboss/tools/docker-entrypoint.sh"]
+          command: ["/bin/sh", "-c", "export KEYCLOAK_ADMIN=$(cat /mnt/secrets-store/FF-KEYCLOAK-ADMIN); export KEYCLOAK_ADMIN_PASSWORD=$(cat /mnt/secrets-store/FF-KEYCLOAK-ADMIN-PASSWORD); /opt/jboss/tools/docker-entrypoint.sh"]
           volumeMounts:
             - name: secrets-store04-inline
               mountPath: "/mnt/secrets-store"

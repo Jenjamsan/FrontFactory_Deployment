@@ -28,7 +28,7 @@ spec:
             requests:
               cpu: 250m
               memory: 750Mi
-          command: ["/bin/sh", "-c", "export JWT_AUTHORITY=$(cat /mnt/secrets-store/FF-JWT-AUTHORITY); export JWT_AUDIENCE=$(cat /mnt/secrets-store/FF-JWT-AUDIENCE); export TARGET_ENV=$(cat /mnt/secret-store/FF-GATEWAY-TARGET-ENV); dotnet FrontFactory.Gateway-API.dll;"]
+          command: ["/bin/sh", "-c", "export JWT_AUTHORITY=$(cat /mnt/secrets-store/FF-JWT-AUTHORITY); export JWT_AUDIENCE=$(cat /mnt/secrets-store/FF-JWT-AUDIENCE); export TARGET_ENV=$(cat /mnt/secrets-store/FF-GATEWAY-TARGET-ENV); dotnet FrontFactory.Gateway-API.dll;"]
           volumeMounts:
             - name: secrets-store03-inline
               mountPath: "/mnt/secrets-store"
