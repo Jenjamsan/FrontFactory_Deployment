@@ -14,6 +14,7 @@ spec:
     metadata:
       labels:
         app: ff-generation-api
+        aadpodidbinding: pod-identity-aksff
     spec:
       containers:
         - name: ff-generation-api
@@ -23,14 +24,19 @@ spec:
               containerPort: 80
             - name: https
               containerPort: 443
-          env:
-          - name: JWT_AUTHORITY
-            value: http://20.37.0.159:8080/realms/frontfactory
-          - name: JWT_AUDIENCE
-            value: account
-          - name: PARSING_BASE_URL
-            value: http://20.213.242.133/parser/v1.0
           resources:
             requests:
               cpu: 250m
               memory: 750Mi
+          command: ["/bin/sh", "-c", "export JWT_AUTHORITY=$(cat /mnt/secrets-store/FF-JWT-AUTHORITY); export JWT_AUDIENCE=$(cat /mnt/secrets-store/FF-JWT-AUDIENCE); export PARSING_BASE_URL=$(cat /mnt/secret-store/FF-PARSING-BASE-URL); dotnet FrontFactory.Generator.Presentation.dll;"]
+          volumeMounts:
+            - name: secrets-store02-inline
+              mountPath: "/mnt/secrets-store"
+              readOnly: true
+      volumes:
+        - name: secrets-store02-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "azure-ffakv-podid"

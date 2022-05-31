@@ -19,10 +19,6 @@ spec:
           image: acrff.azurecr.io/utilitaires/keycloak:18.0.0
           args: ["start-dev"]
           env:
-          - name: KEYCLOAK_ADMIN
-            value: "admin"
-          - name: KEYCLOAK_ADMIN_PASSWORD
-            value: "admin"
           - name: KC_PROXY
             value: "edge"
           ports:
@@ -34,3 +30,15 @@ spec:
             httpGet:
               path: /realms/master
               port: 8080
+          command: ["/bin/sh", "-c", "export KEYCLOAK_ADMIN=$(cat /mnt/secret-store/FF-KEYCLOAK-ADMIN); export KEYCLOAK_ADMIN_PASSWORD=$(cat /mnt/secret-store/FF-KEYCLOAK-ADMIN-PASSWORD); /opt/jboss/tools/docker-entrypoint.sh"]
+          volumeMounts:
+            - name: secrets-store03-inline
+              mountPath: "/mnt/secrets-store"
+              readOnly: true
+      volumes:
+        - name: secrets-store03-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "azure-ffakv-podid"
