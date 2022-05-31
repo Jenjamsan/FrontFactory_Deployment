@@ -23,10 +23,15 @@ spec:
               containerPort: 80
             - name: https
               containerPort: 443
-          env:
-          - name: DB_CONNECTION_STRING
-            value: Data Source=ff-parsing-db-service.ff-production.svc.cluster.local;Initial Catalog=ff_parsing;Persist Security Info=True;User ID=sa;Password=Azerty@1234;
-          - name: JWT_AUTHORITY
-            value: http://20.37.0.159:8080/realms/frontfactory
-          - name: JWT_AUDIENCE
-            value: account
+          command: ["/bin/sh", "-c", "export JWT_AUTHORITY=$(cat /mnt/secrets-store/FF-JWT-AUTHORITY); export JWT_AUDIENCE=$(cat /mnt/secrets-store/JWT_AUDIENCE); export DB_CONNECTION_STRING=$("Data Source=ff-parsing-db-service.ff-production.svc.cluster.local;Initial Catalog=ff_parsing;Persist Security Info=True;User ID=sa;Password=$(cat /mnt/secrets-store/FF-PARSING-DB-PASSWORD);") dotnet FrontFactory.Parser.Presentation.dll;"]
+                volumeMounts:
+                - name: secrets-store01-inline
+                  mountPath: "/mnt/secrets-store"
+                  readOnly: true
+            volumes:
+              - name: secrets-store01-inline
+                csi:
+                  driver: secrets-store.csi.k8s.io
+                  readOnly: true
+                  volumeAttributes:
+                    secretProviderClass: "azure-ffakv-podid"

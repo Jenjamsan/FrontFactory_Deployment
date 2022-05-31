@@ -28,6 +28,8 @@ spec:
             value: http://20.37.0.159:8080/realms/frontfactory
           - name: JWT_AUDIENCE
             value: account
+          - name: TARGET_ENV
+            value: production
           resources:
             requests:
               cpu: 250m
