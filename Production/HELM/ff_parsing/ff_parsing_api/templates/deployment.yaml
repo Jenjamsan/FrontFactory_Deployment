@@ -5,12 +5,12 @@ metadata:
   namespace: ff-production
   labels:
     app: ff-parsing-api
-    aadpodidbinding: pod-identity-aksff
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: ff-parsing-api
+      aadpodidbinding: pod-identity-aksff
   template:
     metadata:
       labels:
