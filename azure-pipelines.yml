@@ -68,7 +68,7 @@ steps:
 
        export IDENT_NAME="app-identity-$AKS_NAME" 
        export POD_IDENTITY_NAME="pod-identity-aksff"
-       export POD_IDENTITY_NAMESPACE="namespace-aksff"      
+       export POD_IDENTITY_NAMESPACE="ffp-production"      
        az aks enable-addons --addons azure-keyvault-secrets-provider --name $AKS_NAME --resource-group $RG
       
        az aks update -g $RG -n $AKS_NAME --enable-pod-identity --enable-pod-identity-with-kubenet
