@@ -33,6 +33,9 @@ spec:
             - name: secrets-store02-inline
               mountPath: "/mnt/secrets-store"
               readOnly: true
+            - name: ffshare
+              mountPath: /mnt/ffshare/
+              readOnly: false
       volumes:
         - name: secrets-store02-inline
           csi:
@@ -40,3 +43,8 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: "azure-ffakv-podid"
+        - name: ffshare
+          azureFile:
+            secretName: ffshare-secret
+            shareName: ffshare
+            readOnly: false
