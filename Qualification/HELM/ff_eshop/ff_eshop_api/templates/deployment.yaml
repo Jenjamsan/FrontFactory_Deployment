@@ -25,7 +25,7 @@ spec:
               containerPort: 443
           env:
             - name: PARSING_BASE_URL
-              value: http://ff-parsing-api-service.svc.cluster.local/v1.0
+              value: http://ff-parsing-api-service.ff-qualification.svc.cluster.local/v1.0
             - name: JWT_AUDIENCE
               value: account
             - name: JWT_AUTHORITY
