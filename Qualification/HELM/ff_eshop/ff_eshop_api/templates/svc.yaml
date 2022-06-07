@@ -16,4 +16,4 @@ spec:
   selector:
     app: ff-eshop-api
   type: LoadBalancer
-  clusterIP: 10.99.188.98
+  clusterIP: 10.99.188.99
