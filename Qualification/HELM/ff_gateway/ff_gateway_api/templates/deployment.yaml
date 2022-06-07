@@ -23,9 +23,12 @@ spec:
               containerPort: 80
             - name: https
               containerPort: 443
-          resources:
-            requests:
-              cpu: 250m
-              memory: 750Mi
+          env:
+            - name: TARGET_ENV
+              value: PREPROD
+            - name: JWT_AUDIENCE
+              value: account
+            - name: JWT_AUTHORITY
+              value: http://10.4.202.5:8080/realms/frontfactory
       imagePullSecrets:
         - name: regcred
