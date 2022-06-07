@@ -23,12 +23,19 @@ spec:
               containerPort: 80
             - name: https
               containerPort: 443
-          resources:
-            requests:
-              cpu: 250m
-              memory: 750Mi
+          env:
+            - name: BASE_ANGULAR_DIR_LOCATION
+              value: /mnt/ff-preprod-api-generation/baseAngular
+            - name: CLIENT_FRONT_GENERATION_LOCATION
+              value: /mnt/ff-preprod-api-generation/client
+            - name: JWT_AUDIENCE
+              value: account
+            - name: JWT_AUTHORITY
+              value: http://10.4.202.5:8080/realms/frontfactory
+            - name: PARSING_BASE_URL
+              value: http://10.99.188.98/v1.0
           volumeMounts:
-            - mountPath: /mnt/ff-frontend-qualif
+            - mountPath: /mnt/ff-preprod-api-generation
               name: ff-preprod-api-generation-pv
       volumes:
         - name: ff-preprod-api-generation-pv
