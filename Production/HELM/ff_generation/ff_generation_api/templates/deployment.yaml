@@ -14,6 +14,7 @@ spec:
     metadata:
       labels:
         app: ff-generation-api
+        aadpodidbinding: pod-identity-aksff
     spec:
       containers:
         - name: ff-generation-api
@@ -27,3 +28,23 @@ spec:
             requests:
               cpu: 250m
               memory: 750Mi
+          command: ["/bin/sh", "-c", "export JWT_AUTHORITY=$(cat /mnt/secrets-store/FF-JWT-AUTHORITY); export JWT_AUDIENCE=$(cat /mnt/secrets-store/FF-JWT-AUDIENCE); export PARSING_BASE_URL=$(cat /mnt/secrets-store/FF-PARSING-BASE-URL); dotnet FrontFactory.Generator.Presentation.dll;"]
+          volumeMounts:
+            - name: secrets-store02-inline
+              mountPath: "/mnt/secrets-store"
+              readOnly: true
+            - name: ffshare
+              mountPath: /mnt/ffshare/
+              readOnly: false
+      volumes:
+        - name: secrets-store02-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "azure-ffakv-podid"
+        - name: ffshare
+          azureFile:
+            secretName: ffshare-secret
+            shareName: ffshare
+            readOnly: false

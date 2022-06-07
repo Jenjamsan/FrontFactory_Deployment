@@ -1,3 +1,17 @@
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: ff-eshop-pvc
+  annotations:
+    volume.beta.kubernetes.io/storage-class: azure-disk
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 6Gi
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -15,6 +29,8 @@ spec:
       labels:
         app: ff-eshop-db
     spec:
+      securityContext:
+        fsGroup: 10001
       containers:
         - name: ff-eshop-db
           image: acrff.azurecr.io/utilitaires/mssql:latest
@@ -25,3 +41,10 @@ spec:
               value: Azerty@1234
             - name: ACCEPT_EULA
               value: "Y"
+          volumeMounts:
+            - mountPath: /var/opt/mssql
+              name: ff-eshop-pv
+      volumes:
+        - name: ff-eshop-pv
+          persistentVolumeClaim:
+            claimName: ff-eshop-pvc

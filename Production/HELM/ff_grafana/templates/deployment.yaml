@@ -55,11 +55,9 @@ metadata:
 spec:
   ports:
     - port: 3000
-      protocol: TCP
+      name: http
       targetPort: http-grafana
   selector:
     app: grafana
   sessionAffinity: None
-  type: ClusterIP
-  clusterIP: 10.0.6.160
-
+  type: LoadBalancer

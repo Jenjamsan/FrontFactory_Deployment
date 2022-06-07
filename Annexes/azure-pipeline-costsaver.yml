@@ -1,0 +1,13 @@
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: $(azureResourceManagerConnection)
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    arguments: '$(Azure_ResourceGroup)'
+    inlineScript: |
+      AKS_To_Start=$(az aks list -g $1 --query [].name -otsv)
+      az aks stop -g $1 -n $AKS_To_Start
