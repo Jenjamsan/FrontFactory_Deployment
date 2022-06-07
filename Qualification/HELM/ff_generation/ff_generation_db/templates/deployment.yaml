@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ff-generation-db
+  namespace: ff-qualification
+  labels:
+    app: ff-generation-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ff-generation-db
+  template:
+    metadata:
+      labels:
+        app: ff-generation-db
+    spec:
+      containers:
+        - name: ff-generation-db
+          image: nexus-registry.frontfactory.local/utilitaires/mssql:latest
+          ports:
+            - containerPort: 1433
+          env:
+            - name: SA_PASSWORD
+              value: Azerty@1234
+            - name: ACCEPT_EULA
+              value: "Y"
+          volumeMounts:
+            - mountPath: /var/opt/mssql/data
+              name: ff-preprod-db-generation-pv
+      volumes:
+        - name: ff-preprod-db-generation-pv
+          persistentVolumeClaim:
+            claimName: ff-preprod-db-generation-pvc
+      imagePullSecrets:
+        - name: regcred
