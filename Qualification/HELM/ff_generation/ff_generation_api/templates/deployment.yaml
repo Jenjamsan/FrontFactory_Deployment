@@ -27,7 +27,7 @@ spec:
             - name: BASE_ANGULAR_DIR_LOCATION
               value: /mnt/ff-preprod-api-generation/baseAngular
             - name: CLIENT_FRONT_GENERATION_LOCATION
-              value: /mnt/ff-preprod-api-generation/client
+              value: /mnt/ff-preprod-api-generation
             - name: JWT_AUDIENCE
               value: account
             - name: JWT_AUTHORITY
