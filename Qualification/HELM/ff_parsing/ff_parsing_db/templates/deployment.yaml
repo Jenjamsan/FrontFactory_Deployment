@@ -27,10 +27,10 @@ spec:
               value: "Y"
           volumeMounts:
             - mountPath: /var/opt/mssql/data
-              name: ff-preprod-db-parser-pv
+              name: ff-preprod-db-parsing-pv
       volumes:
-        - name: ff-preprod-db-parser-pv
+        - name: ff-preprod-db-parsing-pv
           persistentVolumeClaim:
-            claimName: ff-preprod-db-parser-pvc
+            claimName: ff-preprod-db-parsing-pvc
       imagePullSecrets:
         - name: regcred
