@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ff-preprod-db-generation
+spec:
+  destination:
+    name: ""
+    namespace: ff-qualification
+    server: "https://kubernetes.default.svc"
+  source:
+    path: Qualification/HELM/ff_generation/ff_generation_db
+    repoURL: "http://10.4.201.160:3000/frontfactory/FrontFactory_Environnements"
+    targetRevision: main
+  project: default
