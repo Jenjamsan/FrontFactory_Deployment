@@ -34,7 +34,7 @@ spec:
               mountPath: "/mnt/secrets-store"
               readOnly: true
             - name: ffshare
-              mountPath: /mnt/ff-preprod-api-generation
+              mountPath: "/mnt/ff-preprod-api-generation"
               readOnly: false
       volumes:
         - name: secrets-store02-inline
