@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: ff-preprod-db-parser-pv
+  name: ff-preprod-db-generation-pv
   namespace: ff-qualification
 spec:
   capacity:
@@ -15,5 +15,5 @@ spec:
     - hard
     - nfsvers=4.1
   nfs:
-    path: /mnt/ff-preprod-db-parser
+    path: /mnt/ff-preprod-db-generation
     server: 10.4.201.160

@@ -27,7 +27,7 @@ spec:
               value: "Y"
           volumeMounts:
             - mountPath: /var/opt/mssql/data
-              name: ff-preprod-db-generation-pv
+            name: ff-preprod-db-generation-pv
       volumes:
         - name: ff-preprod-db-generation-pv
           persistentVolumeClaim:
