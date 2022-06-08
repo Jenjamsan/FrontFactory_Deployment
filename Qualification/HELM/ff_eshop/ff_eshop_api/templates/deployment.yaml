@@ -30,5 +30,7 @@ spec:
               value: account
             - name: JWT_AUTHORITY
               value: http://10.4.202.5:8080/realms/frontfactory
+            - name: DB_CONNECTION_STRING
+              value: Data Source=ff-eshop-db-service.ff-qualification.svc.cluster.local;Initial Catalog=ff_customer;Persist Security Info=True;User ID=sa;Password=Azerty@1234;
       imagePullSecrets:
         - name: regcred
