@@ -20,22 +20,38 @@ spec:
           image: acrff.azurecr.io/utilitaires/keycloak:18.0.0
           args: ["start-dev"]
           env:
+          - name: KEYCLOAK_ADMIN
+            value: "admin"
+          - name: KEYCLOAK_ADMIN_PASSWORD
+            value: "admin"
           - name: KC_PROXY
             value: "edge"
-          - name: KEYCLOAK_ADMIN
-            valueFrom:
-              secretKeyRef:
-                name: keycloak
-                key: username
-                optional: false
-          - name: KEYCLOAK_ADMIN_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: keycloak
-                key: password
-                optional: false
           ports:
           - name: http
             containerPort: 8080
           - name: https
             containerPort: 8443
+          readinessProbe:
+            httpGet:
+              path: /realms/master
+              port: 8080
+          # env:
+          # - name: KC_PROXY
+          #   value: "edge"
+          # # - name: KEYCLOAK_ADMIN
+          # #   valueFrom:
+          # #     secretKeyRef:
+          # #       name: keycloak
+          # #       key: username
+          # #       optional: false
+          # # - name: KEYCLOAK_ADMIN_PASSWORD
+          # #   valueFrom:
+          # #     secretKeyRef:
+          # #       name: keycloak
+          # #       key: password
+          # #       optional: false
+          # ports:
+          # - name: http
+          #   containerPort: 8080
+          # - name: https
+          #   containerPort: 8443
