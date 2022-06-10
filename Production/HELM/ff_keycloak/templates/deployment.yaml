@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: keycloak
+  namespace: ff-production
   labels:
     app: keycloak
 spec:
@@ -13,7 +14,6 @@ spec:
     metadata:
       labels:
         app: keycloak
-        aadpodidbinding: pod-identity-aksff
     spec:
       containers:
         - name: keycloak
@@ -43,14 +43,3 @@ spec:
             httpGet:
               path: /realms/master
               port: 8080 
-          volumeMounts:
-            - name: secrets-store04-inline
-              mountPath: "/mnt/secrets-store"
-              readOnly: true
-      volumes:
-        - name: secrets-store04-inline
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: "azure-ffakv-podid"
