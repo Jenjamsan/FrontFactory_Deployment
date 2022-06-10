@@ -2,7 +2,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: ff-parsing-db-pvc
+  name: ff-generation-db-pvc
   annotations:
     volume.beta.kubernetes.io/storage-class: azure-disk
 spec:
@@ -15,37 +15,38 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ff-parsing-db
+  name: ff-generation-db
   namespace: ff-production
   labels:
-    app: ff-parsing-db
+    app: ff-generation-db
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ff-parsing-db
+      app: ff-generation-db
   template:
     metadata:
       labels:
-        app: ff-parsing-db
+        app: ff-generation-db
+        aadpodidbinding: pod-identity-aksff
     spec:
       securityContext:
         fsGroup: 10001
       containers:
-        - name: ff-parsing-db
+        - name: ff-generation-db
           image: acrff.azurecr.io/utilitaires/mssql:latest
           ports:
             - containerPort: 1433
           env:
             - name: ACCEPT_EULA
               value: "Y"
-          command: ["/bin/sh", "-c", "export SA_PASSWORD=$(cat /mnt/secrets-store/FF-PARSING-DB-PASSWORD);"]
+          command: ["/bin/sh", "-c", "export SA_PASSWORD=$(cat /mnt/secrets-store/FF-GENERATION-DB-PASSWORD);"]
           volumeMounts:
-            - name: secrets-store07-inline
+            - name: secrets-store06-inline
               mountPath: "/mnt/secrets-store"
               readOnly: true
       volumes:
-        - name: secrets-store07-inline
+        - name: secrets-store06-inline
           csi:
             driver: secrets-store.csi.k8s.io
             readOnly: true
@@ -53,8 +54,8 @@ spec:
               secretProviderClass: "azure-ffakv-podid"
           volumeMounts:
             - mountPath: /var/opt/mssql
-              name: ff-parsing-db-pv
+              name: ff-generation-db-pv
       volumes:
-        - name: ff-parsing-db-pv
+        - name: ff-generation-db-pv
           persistentVolumeClaim:
-            claimName: ff-parsing-db-pvc
+            claimName: ff-generation-db-pvc
