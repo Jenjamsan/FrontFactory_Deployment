@@ -45,6 +45,8 @@ spec:
             - name: secrets-store06-inline
               mountPath: "/mnt/secrets-store"
               readOnly: true
+            - mountPath: /var/opt/mssql
+              name: ff-generation-db-pv
       volumes:
         - name: secrets-store06-inline
           csi:
@@ -52,10 +54,7 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: "azure-ffakv-podid"
-          volumeMounts:
-            - mountPath: /var/opt/mssql
-              name: ff-generation-db-pv
-      volumes:
         - name: ff-generation-db-pv
           persistentVolumeClaim:
             claimName: ff-generation-db-pvc
+        
