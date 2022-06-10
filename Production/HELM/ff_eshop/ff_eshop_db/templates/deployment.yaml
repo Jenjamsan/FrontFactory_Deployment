@@ -40,7 +40,7 @@ spec:
           env:
             - name: ACCEPT_EULA
               value: "Y"
-          command: ["/bin/sh", "-c", "export SA_PASSWORD=$(cat /mnt/secrets-store/FF-ESHOP-DB-PASSWORD);"]
+          command: ["/bin/sh", "-c", "export SA_PASSWORD=$(cat /mnt/secrets-store/FF-ESHOP-DB-PASSWORD); /opt/mssql/bin/sqlservr;"]
           volumeMounts:
             - name: secrets-store08-inline
               mountPath: "/mnt/secrets-store"
