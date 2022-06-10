@@ -2,7 +2,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: ff-eshop-pvc
+  name: ff-eshop-db-pvc
   annotations:
     volume.beta.kubernetes.io/storage-class: azure-disk
 spec:
@@ -37,14 +37,24 @@ spec:
           ports:
             - containerPort: 1433
           env:
-            - name: SA_PASSWORD
-              value: Azerty@1234
             - name: ACCEPT_EULA
               value: "Y"
+          command: ["/bin/sh", "-c", "export SA_PASSWORD=$(cat /mnt/secrets-store/FF-ESHOP-DB-PASSWORD);"]
+          volumeMounts:
+            - name: secrets-store08-inline
+              mountPath: "/mnt/secrets-store"
+              readOnly: true
+      volumes:
+        - name: secrets-store08-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "azure-ffakv-podid"
           volumeMounts:
             - mountPath: /var/opt/mssql
-              name: ff-eshop-pv
+              name: ff-eshop-db-pv
       volumes:
-        - name: ff-eshop-pv
+        - name: ff-eshop-db-pv
           persistentVolumeClaim:
-            claimName: ff-eshop-pvc
+            claimName: ff-eshop-db-pvc
