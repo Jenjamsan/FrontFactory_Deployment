@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: keycloak
-          image: acrff.azurecr.io/utilitaires/keycloak:18.0.0
+          image: quay.io/keycloak/keycloak:18.0.0
           args: ["start-dev"]
           env:
           - name: KEYCLOAK_ADMIN
