@@ -28,6 +28,7 @@ spec:
     metadata:
       labels:
         app: ff-eshop-db
+        aadpodidbinding: pod-identity-aksff
     spec:
       securityContext:
         fsGroup: 10001
