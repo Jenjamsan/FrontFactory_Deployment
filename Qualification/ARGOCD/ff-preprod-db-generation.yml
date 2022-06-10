@@ -10,5 +10,5 @@ spec:
   source:
     path: Qualification/HELM/ff_generation/ff_generation_db
     repoURL: "http://10.4.201.160:3000/frontfactory/FrontFactory_Environnements"
-    targetRevision: main
+    targetRevision: develop
   project: default

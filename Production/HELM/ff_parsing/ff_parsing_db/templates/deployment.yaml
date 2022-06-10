@@ -28,6 +28,7 @@ spec:
     metadata:
       labels:
         app: ff-parsing-db
+        aadpodidbinding: pod-identity-aksff
     spec:
       securityContext:
         fsGroup: 10001
@@ -44,6 +45,8 @@ spec:
             - name: secrets-store07-inline
               mountPath: "/mnt/secrets-store"
               readOnly: true
+            - mountPath: /var/opt/mssql
+              name: ff-parsing-db-pv
       volumes:
         - name: secrets-store07-inline
           csi:
@@ -51,10 +54,7 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: "azure-ffakv-podid"
-          volumeMounts:
-            - mountPath: /var/opt/mssql
-              name: ff-parsing-db-pv
-      volumes:
         - name: ff-parsing-db-pv
           persistentVolumeClaim:
             claimName: ff-parsing-db-pvc
+        
