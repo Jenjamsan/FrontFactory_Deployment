@@ -15,5 +15,5 @@ spec:
       targetPort: 443
   selector:
     app: ff-eshop-api
-  type: LoadBalancer
+  type: ClusterIP
   clusterIP: 10.0.7.160

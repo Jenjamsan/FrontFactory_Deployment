@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ff-gateway-api-ingress
-  namespace: ff-qualification
+  namespace: ff-production
 spec:
     ingressClassName: nginx
     rules:

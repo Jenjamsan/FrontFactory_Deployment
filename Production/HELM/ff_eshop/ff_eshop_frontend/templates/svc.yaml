@@ -15,6 +15,6 @@ spec:
       targetPort: 443
   selector:
     app: ff-front
-  type: LoadBalancer
+  type: ClusterIP
   clusterIP: 10.0.7.161
-  loadBalancerIP: 20.213.232.31
+  #loadBalancerIP: 20.213.232.31
