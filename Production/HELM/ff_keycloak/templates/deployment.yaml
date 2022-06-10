@@ -22,6 +22,18 @@ spec:
           env:
           - name: KC_PROXY
             value: "edge"
+          - name: KEYCLOAK_ADMIN
+            valueFrom:
+            secretKeyRef:
+              name: keycloak
+              key: username
+              optional: false
+          - name: KEYCLOAK_ADMIN_PASSWORD
+            valueFrom:
+            secretKeyRef:
+              name: keycloak
+              key: password
+              optional: false
           ports:
           - name: http
             containerPort: 8080
@@ -30,8 +42,7 @@ spec:
           readinessProbe:
             httpGet:
               path: /realms/master
-              port: 8080
-          command: ["/bin/sh", "-c", "export KEYCLOAK_ADMIN=$(cat /mnt/secrets-store/FF-KEYCLOAK-ADMIN); export KEYCLOAK_ADMIN_PASSWORD=$(cat /mnt/secrets-store/FF-KEYCLOAK-ADMIN-PASSWORD);"]
+              port: 8080 
           volumeMounts:
             - name: secrets-store04-inline
               mountPath: "/mnt/secrets-store"
