@@ -37,6 +37,12 @@ spec:
                 secretKeyRef:
                   name: ff-keycloak
                   key: JWT_AUTHORITY
-                  optional: false                 
+                  optional: false
+            - name: JWT_AUDIENCE
+              valueFrom:
+                secretKeyRef:
+                  name: ff-keycloak
+                  key: JWT_AUDIENCE
+                  optional: false
       imagePullSecrets:
         - name: regcred
