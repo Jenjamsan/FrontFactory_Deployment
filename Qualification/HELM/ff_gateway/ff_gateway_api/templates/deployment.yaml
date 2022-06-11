@@ -25,11 +25,7 @@ spec:
               containerPort: 443
           env:
             - name: TARGET_ENV
-              valueFrom:
-                secretKeyRef:
-                  name: ff-gateway-api
-                  key: TARGET_ENV
-                  optional: false
+              value: PREPROD
             - name: JWT_AUDIENCE
               valueFrom:
                 secretKeyRef:
