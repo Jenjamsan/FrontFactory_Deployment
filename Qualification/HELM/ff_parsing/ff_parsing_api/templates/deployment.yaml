@@ -27,15 +27,15 @@ spec:
             - name: JWT_AUDIENCE
               valueFrom:
                 secretKeyRef:
-                  name: ff-keycloak
+                  name: ff-parsing-api
                   key: JWT_AUDIENCE
                   optional: false
             - name: JWT_AUTHORITY
               valueFrom:
                 secretKeyRef:
-                  name: ff-keycloak
+                  name: ff-parsing-api
                   key: JWT_AUTHORITY
-                  optional: false                 
+                  optional: false
             - name: DB_CONNECTION_STRING
               valueFrom:
                 secretKeyRef:
