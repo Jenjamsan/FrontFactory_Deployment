@@ -5,6 +5,7 @@ metadata:
   namespace: ff-qualification
 spec:
   type: LoadBalancer
+  loadBalancerIP: 10.4.202.8
   selector:
     app: ff-eshop-db
   ports:

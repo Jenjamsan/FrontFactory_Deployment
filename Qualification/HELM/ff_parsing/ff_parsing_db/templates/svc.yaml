@@ -5,6 +5,7 @@ metadata:
   namespace: ff-qualification
 spec:
   type: LoadBalancer
+  loadBalancerIP: 10.4.202.6
   selector:
     app: ff-parsing-db
   ports:

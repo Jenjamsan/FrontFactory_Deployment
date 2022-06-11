@@ -5,6 +5,7 @@ metadata:
   namespace: ff-qualification
 spec:
   type: LoadBalancer
+  loadBalancerIP: 10.4.202.7
   selector:
     app: ff-generation-db
   ports:
