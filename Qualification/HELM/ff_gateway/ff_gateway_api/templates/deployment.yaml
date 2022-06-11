@@ -26,12 +26,6 @@ spec:
           env:
             - name: TARGET_ENV
               value: PREPROD
-            - name: JWT_AUDIENCE
-              valueFrom:
-                secretKeyRef:
-                  name: ff-keycloak
-                  key: JWT_AUDIENCE
-                  optional: false
             - name: JWT_AUTHORITY
               valueFrom:
                 secretKeyRef:
