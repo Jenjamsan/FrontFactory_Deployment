@@ -24,11 +24,29 @@ spec:
             - name: https
               containerPort: 443
           env:
-            - name: DB_CONNECTION_STRING
-              value: Data Source=ff-parsing-db-service.ff-qualification.svc.cluster.local;Initial Catalog=ff_parsing;Persist Security Info=True;User ID=sa;Password=Azerty@1234;
             - name: JWT_AUDIENCE
-              value: account
+              valueFrom:
+                secretKeyRef:
+                  name: ff-gateway-api
+                  key: JWT_AUDIENCE
+                  optional: false
             - name: JWT_AUTHORITY
-              value: http://10.4.202.5:8080/realms/frontfactory
+              valueFrom:
+                secretKeyRef:
+                  name: ff-parsing-api
+                  key: JWT_AUTHORITY
+                  optional: false                 
+            - name: DB_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: ff-parsing-api
+                  key: DB_CONNECTION_STRING
+                  optional: false
+            - name: GENERATOR_BASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: ff-parsing-api
+                  key: GENERATOR_BASE_URL
+                  optional: false
       imagePullSecrets:
         - name: regcred

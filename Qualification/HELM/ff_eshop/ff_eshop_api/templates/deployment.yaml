@@ -24,13 +24,66 @@ spec:
             - name: https
               containerPort: 443
           env:
-            - name: PARSING_BASE_URL
-              value: http://10.99.188.98/v1.0
+          env:
             - name: JWT_AUDIENCE
-              value: account
+              valueFrom:
+                secretKeyRef:
+                  name: ff-eshop-api
+                  key: JWT_AUDIENCE
+                  optional: false
             - name: JWT_AUTHORITY
-              value: http://10.4.202.5:8080/realms/frontfactory
+              valueFrom:
+                secretKeyRef:
+                  name: ff-eshop-api
+                  key: JWT_AUTHORITY
+                  optional: false                 
             - name: DB_CONNECTION_STRING
-              value: Data Source=ff-eshop-db-service.ff-qualification.svc.cluster.local;Initial Catalog=ff_customer;Persist Security Info=True;User ID=sa;Password=Azerty@1234;
+              valueFrom:
+                secretKeyRef:
+                  name: ff-eshop-api
+                  key: DB_CONNECTION_STRING
+                  optional: false
+            - name: PARSING_BASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: ff-eshop-api
+                  key: PARSING_BASE_URL
+                  optional: false
+            - name: GENERATOR_BASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: ff-eshop-api
+                  key: GENERATOR_BASE_URL
+                  optional: false
+            - name: AZURE_DEVOPS_API_BASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: ff-eshop-api
+                  key: AZURE_DEVOPS_API_BASE_URL
+                  optional: false
+            - name: AZURE_DEVOPS_ORGANIZATION
+              valueFrom:
+                secretKeyRef:
+                  name: ff-eshop-api
+                  key: AZURE_DEVOPS_ORGANIZATION
+                  optional: false
+            - name: AZURE_DEVOPS_PROJECT
+              valueFrom:
+                secretKeyRef:
+                  name: ff-eshop-api
+                  key: AZURE_DEVOPS_PROJECT
+                  optional: false
+            - name: AZURE_DEVOPS_PIPELINE_ID
+              valueFrom:
+                secretKeyRef:
+                  name: ff-eshop-api
+                  key: AZURE_DEVOPS_PIPELINE_ID
+                  optional: false
+            - name: AZURE_AUTH_HEADER
+              valueFrom:
+                secretKeyRef:
+                  name: ff-eshop-api
+                  key: AZURE_AUTH_HEADER
+                  optional: false          
       imagePullSecrets:
         - name: regcred

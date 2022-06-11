@@ -21,10 +21,14 @@ spec:
           ports:
             - containerPort: 1433
           env:
-            - name: SA_PASSWORD
-              value: Azerty@1234
             - name: ACCEPT_EULA
               value: "Y"
+            - name: SA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ff-db
+                  key: SA_PASSWORD
+                  optional: false
           volumeMounts:
             - mountPath: /var/opt/mssql/data
               name: ff-preprod-db-parsing-pv
