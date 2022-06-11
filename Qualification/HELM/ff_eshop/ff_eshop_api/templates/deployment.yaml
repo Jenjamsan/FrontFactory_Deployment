@@ -24,7 +24,6 @@ spec:
             - name: https
               containerPort: 443
           env:
-          env:
             - name: JWT_AUDIENCE
               valueFrom:
                 secretKeyRef:
@@ -36,7 +35,7 @@ spec:
                 secretKeyRef:
                   name: ff-keycloak
                   key: JWT_AUTHORITY
-                  optional: false                 
+                  optional: false
             - name: DB_CONNECTION_STRING
               valueFrom:
                 secretKeyRef:
@@ -84,6 +83,6 @@ spec:
                 secretKeyRef:
                   name: ff-eshop-api
                   key: AZURE_AUTH_HEADER
-                  optional: false          
+                  optional: false
       imagePullSecrets:
         - name: regcred
