@@ -15,5 +15,24 @@ spec:
       targetPort: 443
   selector:
     app: ff-parsing-api
-  type: ClusterIP
-  clusterIP: 10.99.188.98
+  type: LoadBalancer
+  clusterIP: 10.4.202.20
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: ff-parsing-api-service
+#   namespace: ff-qualification
+#   labels:
+#     app: ff-parsing-api
+# spec:
+#   ports:
+#     - port: 80
+#       name: http
+#       targetPort: 80
+#     - port: 443
+#       name: https
+#       targetPort: 443
+#   selector:
+#     app: ff-parsing-api
+#   type: ClusterIP
+#   clusterIP: 10.99.188.98
