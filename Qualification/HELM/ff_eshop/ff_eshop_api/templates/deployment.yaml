@@ -78,11 +78,11 @@ spec:
                   name: ff-eshop-api
                   key: AZURE_DEVOPS_PIPELINE_ID
                   optional: false
-            - name: AZURE_AUTH_HEADER
+            - name: AZURE_DEVOPS_AUTH_HEADER
               valueFrom:
                 secretKeyRef:
                   name: ff-eshop-api
-                  key: AZURE_AUTH_HEADER
+                  key: AZURE_DEVOPS_AUTH_HEADER
                   optional: false
       imagePullSecrets:
         - name: regcred
