@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ff-parsing-db-service
+  name: ff-generation-db-service
   namespace: ff-production
 spec:
   type: ClusterIP
   selector:
-    app: ff-parsing-db
+    app: ff-generation-db
   ports:
     - port: 1433
       targetPort: 1433
