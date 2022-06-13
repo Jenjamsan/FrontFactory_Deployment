@@ -7,6 +7,22 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+
+- task: AzureResourceManagerTemplateDeployment@3
+  name: Part0_ASA
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: $(azureResourceManagerConnection)
+    subscriptionId: $(subscriptionId)
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: $(Azure_ResourceGroup)$(customname)
+    location: 'West Europe'
+    templateLocation: 'Linked artifact'
+    csmFile: 'Production/ARM/FF_STA/azuredeploy.json'
+    csmParametersFile: 'Production/ARM/FF_STA/azuredeploy.parameters.json'
+    overrideParameters: -custom $(customname)
+    deploymentMode: 'Incremental'
+
 - task: AzureResourceManagerTemplateDeployment@3
   name: Part1_Keyvault
   inputs:
