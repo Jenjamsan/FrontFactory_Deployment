@@ -28,7 +28,7 @@ spec:
     metadata:
       labels:
         app: ff-parsing-db
-        aadpodidbinding: pod-identity-aksff
+        aadpodidbinding: pod-identity-aksfrontfactoryprod
     spec:
       securityContext:
         fsGroup: 10001
