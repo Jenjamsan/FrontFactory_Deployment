@@ -85,7 +85,7 @@ steps:
       export AKV=akv$2
 
        export IDENT_NAME="app-identity-$AKS_NAME" 
-       export POD_IDENTITY_NAME="pod-identity-aksff"
+       export POD_IDENTITY_NAME="pod-identity-$AKS_NAME"
        export POD_IDENTITY_NAMESPACE="ff-production"      
        az aks enable-addons --addons azure-keyvault-secrets-provider --name $AKS_NAME --resource-group $RG
       
