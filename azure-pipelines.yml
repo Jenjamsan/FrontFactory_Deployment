@@ -14,12 +14,12 @@ steps:
     azureResourceManagerConnection: $(azureResourceManagerConnection)
     subscriptionId: $(subscriptionId)
     action: 'Create Or Update Resource Group'
-    resourceGroupName: $(Azure_ResourceGroup)
+    resourceGroupName: $(Azure_ResourceGroup)$(customname)
     location: 'West Europe'
     templateLocation: 'Linked artifact'
     csmFile: 'Production/ARM/FF_KEYVAULT/azuredeploy.json'
     csmParametersFile: 'Production/ARM/FF_KEYVAULT/azuredeploy.parameters.json'
-    overrideParameters: -secret1_value toto
+    overrideParameters: -custom $(customname)
     deploymentMode: 'Incremental'
 
 - task: AzureResourceManagerTemplateDeployment@3
@@ -29,11 +29,12 @@ steps:
      azureResourceManagerConnection: $(azureResourceManagerConnection)
      subscriptionId: $(subscriptionId)
      action: 'Create Or Update Resource Group'
-     resourceGroupName: $(Azure_ResourceGroup)
+     resourceGroupName: $(Azure_ResourceGroup)$(customname)
      location: 'West Europe'
      templateLocation: 'Linked artifact'
      csmFile: 'Production/ARM/FF_ACR/azuredeploy.json'
      csmParametersFile: 'Production/ARM/FF_ACR/azuredeploy.parameters.json'
+     overrideParameters: -custom $(customname)
      deploymentMode: 'Incremental'
 
 
@@ -44,11 +45,12 @@ steps:
     azureResourceManagerConnection: $(azureResourceManagerConnection)
     subscriptionId: $(subscriptionId)
     action: 'Create Or Update Resource Group'
-    resourceGroupName: $(Azure_ResourceGroup)
+    resourceGroupName: $(Azure_ResourceGroup)$(customname)
     location: 'West Europe'
     templateLocation: 'Linked artifact'
     csmFile: 'Production/ARM/FF_AKS/azuredeploy.json'
     csmParametersFile: 'Production/ARM/FF_AKS/azuredeploy.parameters.json'
+    overrideParameters: -custom $(customname)
     deploymentMode: 'Incremental'
 
 - task: AzureCLI@2
@@ -58,13 +60,13 @@ steps:
     azureSubscription: $(azureResourceManagerConnection)
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
-    arguments: '$(Azure_ResourceGroup)'
+    arguments: '$(Azure_ResourceGroup) $(customname)'
     inlineScript: |
       az extension add --name aks-preview
       az extension update --name aks-preview
-      export AKS_NAME=aksff
-      export RG=$1
-      export AKV=akvff
+      export AKS_NAME=aks$2
+      export RG=$1$2
+      export AKV=akv$2
 
        export IDENT_NAME="app-identity-$AKS_NAME" 
        export POD_IDENTITY_NAME="pod-identity-aksff"
@@ -113,14 +115,14 @@ steps:
     azureSubscription: $(azureResourceManagerConnection)
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
-    arguments: '$(Azure_ResourceGroup) $(Azure_login) $(Azure_password)'
+    arguments: '$(Azure_ResourceGroup) $(Azure_login) $(Azure_password) $(customname)'
     inlineScript: |
-      ACR_name=$(az acr list --query [].name -otsv -g $1)
+      ACR_name=$(az acr list --query [].name -otsv -g $1$4)
       
-      AKS_name=$(az aks list --query [].name -otsv -g $1)
+      AKS_name=$(az aks list --query [].name -otsv -g $1$4)
 
-      az aks get-credentials --resource-group $1 --name $AKS_name
+      az aks get-credentials --resource-group $1$4 --name $AKS_name
 
       az login -u $2 -p $3
       echo "AKS - ACR Link"
-      az aks update -n $AKS_name -g $1 --attach-acr $ACR_name
+      az aks update -n $AKS_name -g $1$4 --attach-acr $ACR_name
