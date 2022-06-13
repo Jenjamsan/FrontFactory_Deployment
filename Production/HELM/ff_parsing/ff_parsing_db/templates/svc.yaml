@@ -4,8 +4,8 @@ metadata:
   name: ff-parsing-db-service
   namespace: ff-production
 spec:
-  #type: ClusterIP
-  type: LoadBalancer
+  type: ClusterIP
+  #type: LoadBalancer
   selector:
     app: ff-parsing-db
   ports:
