@@ -7,8 +7,23 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+
 - task: AzureResourceManagerTemplateDeployment@3
-  name: Part1_Keyvault
+  name: Part1_storageAccount
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: $(azureResourceManagerConnection)
+    subscriptionId: $(subscriptionId)
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: $(Azure_ResourceGroup)
+    location: 'West Europe'
+    templateLocation: 'Linked artifact'
+    csmFile: 'Production/ARM/FF_STA/azuredeploy.json'
+    csmParametersFile: 'Production/ARM/FF_STA/azuredeploy.parameters.json'
+    deploymentMode: 'Incremental'
+
+- task: AzureResourceManagerTemplateDeployment@3
+  name: Part2_Keyvault
   inputs:
     deploymentScope: 'Resource Group'
     azureResourceManagerConnection: $(azureResourceManagerConnection)
@@ -19,11 +34,10 @@ steps:
     templateLocation: 'Linked artifact'
     csmFile: 'Production/ARM/FF_KEYVAULT/azuredeploy.json'
     csmParametersFile: 'Production/ARM/FF_KEYVAULT/azuredeploy.parameters.json'
-    overrideParameters: -secret1_value toto
     deploymentMode: 'Incremental'
 
 - task: AzureResourceManagerTemplateDeployment@3
-  name: Part2_A_Container_Registry
+  name: Part3_A_Container_Registry
   inputs:
      deploymentScope: 'Resource Group'
      azureResourceManagerConnection: $(azureResourceManagerConnection)
@@ -38,7 +52,7 @@ steps:
 
 
 - task: AzureResourceManagerTemplateDeployment@3
-  name: Part3_AKS
+  name: Part4_AKS
   inputs:
     deploymentScope: 'Resource Group'
     azureResourceManagerConnection: $(azureResourceManagerConnection)
