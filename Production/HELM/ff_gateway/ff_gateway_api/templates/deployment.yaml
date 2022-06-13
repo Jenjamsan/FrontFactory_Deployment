@@ -14,7 +14,7 @@ spec:
     metadata:
       labels:
         app: ff-gateway-api
-        aadpodidbinding: pod-identity-aksff
+        aadpodidbinding: pod-identity-aksfrontfactoryprod
     spec:
       containers:
         - name: ff-gateway-api
@@ -39,4 +39,4 @@ spec:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: "azure-ffakv-podid"
+              secretProviderClass: "azure-akvfrontfactoryprod-podid"

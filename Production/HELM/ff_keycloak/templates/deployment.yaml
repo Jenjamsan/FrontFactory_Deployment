@@ -13,15 +13,26 @@ spec:
     metadata:
       labels:
         app: keycloak
-        aadpodidbinding: pod-identity-aksff
     spec:
       containers:
         - name: keycloak
           image: acrff.azurecr.io/utilitaires/keycloak:18.0.0
           args: ["start-dev"]
           env:
-          - name: KC_PROXY
-            value: "edge"
+            - name: KC_PROXY
+              value: "edge"
+            - name: KEYCLOAK_ADMIN
+              valueFrom:
+                secretKeyRef:
+                  name: ff-keycloak
+                  key: KEYCLOAK_ADMIN
+                  optional: false
+            - name: KEYCLOAK_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ff-keycloak
+                  key: KEYCLOAK_ADMIN_PASSWORD
+                  optional: false
           ports:
           - name: http
             containerPort: 8080
@@ -31,15 +42,3 @@ spec:
             httpGet:
               path: /realms/master
               port: 8080
-          command: ["/bin/sh", "-c", "export KEYCLOAK_ADMIN=$(cat /mnt/secrets-store/FF-KEYCLOAK-ADMIN); export KEYCLOAK_ADMIN_PASSWORD=$(cat /mnt/secrets-store/FF-KEYCLOAK-ADMIN-PASSWORD); /opt/jboss/tools/docker-entrypoint.sh"]
-          volumeMounts:
-            - name: secrets-store04-inline
-              mountPath: "/mnt/secrets-store"
-              readOnly: true
-      volumes:
-        - name: secrets-store04-inline
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: "azure-ffakv-podid"

@@ -28,7 +28,7 @@ spec:
     metadata:
       labels:
         app: ff-eshop-db
-        aadpodidbinding: pod-identity-aksff
+        aadpodidbinding: pod-identity-aksfrontfactoryprod
     spec:
       securityContext:
         fsGroup: 10001
@@ -51,7 +51,7 @@ spec:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: "azure-ffakv-podid"
+              secretProviderClass: "azure-akvfrontfactoryprod-podid"
           volumeMounts:
             - mountPath: /var/opt/mssql
               name: ff-eshop-db-pv
