@@ -26,9 +26,17 @@ spec:
           env:
             - name: TARGET_ENV
               value: PREPROD
-            - name: JWT_AUDIENCE
-              value: account
             - name: JWT_AUTHORITY
-              value: http://10.4.202.5:8080/realms/frontfactory
+              valueFrom:
+                secretKeyRef:
+                  name: ff-keycloak
+                  key: JWT_AUTHORITY
+                  optional: false
+            - name: JWT_AUDIENCE
+              valueFrom:
+                secretKeyRef:
+                  name: ff-keycloak
+                  key: JWT_AUDIENCE
+                  optional: false
       imagePullSecrets:
         - name: regcred

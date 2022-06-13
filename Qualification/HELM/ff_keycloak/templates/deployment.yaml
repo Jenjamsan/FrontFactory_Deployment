@@ -19,12 +19,20 @@ spec:
           image: nexus-registry.frontfactory.local/utilitaires/keycloak:18.0.0
           args: ["start-dev"]
           env:
-          - name: KEYCLOAK_ADMIN
-            value: "admin"
-          - name: KEYCLOAK_ADMIN_PASSWORD
-            value: "admin"
-          - name: KC_PROXY
-            value: "edge"
+            - name: KC_PROXY
+              value: "edge"
+            - name: KEYCLOAK_ADMIN
+              valueFrom:
+                secretKeyRef:
+                  name: ff-keycloak
+                  key: KEYCLOAK_ADMIN
+                  optional: false
+            - name: KEYCLOAK_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ff-keycloak
+                  key: KEYCLOAK_ADMIN_PASSWORD
+                  optional: false
           ports:
           - name: http
             containerPort: 8080
@@ -34,13 +42,6 @@ spec:
             httpGet:
               path: /realms/master
               port: 8080
-      #     volumeMounts:
-      #         - mountPath: /opt/keycloak
-      #           name: ff-preprod-keycloak-pv
-      # volumes:
-      #   - name: ff-preprod-keycloak-pv
-      #     persistentVolumeClaim:
-      #       claimName: ff-preprod-keycloak-pvc
       imagePullSecrets:
         - name: regcred
 

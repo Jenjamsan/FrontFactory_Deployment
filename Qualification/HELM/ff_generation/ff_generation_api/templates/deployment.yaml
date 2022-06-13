@@ -24,18 +24,42 @@ spec:
             - name: https
               containerPort: 443
           env:
-            - name: BASE_ANGULAR_DIR_LOCATION
-              value: /mnt/ff-preprod-api-generation/baseAngular
-            - name: CLIENT_FRONT_GENERATION_LOCATION
-              value: /mnt/ff-preprod-api-generation
             - name: JWT_AUDIENCE
-              value: account
+              valueFrom:
+                secretKeyRef:
+                  name: ff-keycloak
+                  key: JWT_AUDIENCE
+                  optional: false
             - name: JWT_AUTHORITY
-              value: http://10.4.202.5:8080/realms/frontfactory
-            - name: PARSING_BASE_URL
-              value: http://10.99.188.98/v1.0
+              valueFrom:
+                secretKeyRef:
+                  name: ff-keycloak
+                  key: JWT_AUTHORITY
+                  optional: false                 
             - name: DB_CONNECTION_STRING
-              value: Data Source=ff-generation-db-service.ff-qualification.svc.cluster.local;Initial Catalog=ff_generation;Persist Security Info=True;User ID=sa;Password=Azerty@1234;
+              valueFrom:
+                secretKeyRef:
+                  name: ff-generation-api
+                  key: DB_CONNECTION_STRING
+                  optional: false
+            - name: PARSING_BASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: ff-generation-api
+                  key: PARSING_BASE_URL
+                  optional: false
+            - name: BASE_ANGULAR_DIR_LOCATION
+              valueFrom:
+                secretKeyRef:
+                  name: ff-generation-api
+                  key: BASE_ANGULAR_DIR_LOCATION
+                  optional: false
+            - name: CLIENT_FRONT_GENERATION_LOCATION
+              valueFrom:
+                secretKeyRef:
+                  name: ff-generation-api
+                  key: CLIENT_FRONT_GENERATION_LOCATION
+                  optional: false
           volumeMounts:
             - mountPath: /mnt/ff-preprod-api-generation
               name: ff-preprod-api-generation-pv

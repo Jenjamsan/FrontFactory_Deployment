@@ -16,3 +16,4 @@ spec:
   selector:
     app: ff-front
   type: LoadBalancer
+  loadBalancerIP: 10.4.202.4

@@ -115,17 +115,6 @@
                 "KeyvaultNumber" : "[parameters('KeyvaultNumber')]"
             },
             "dependsOn": []
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(parameters('name'),'/toto')]",
-            "apiVersion": "2021-06-01-preview",
-            "properties": {
-                "value": "[parameters('secret1_value')]"
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.KeyVault/vaults/', parameters('name'))]"
-            ]
         }
 
     

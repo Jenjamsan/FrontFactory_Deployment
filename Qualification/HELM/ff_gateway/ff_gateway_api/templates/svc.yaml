@@ -16,3 +16,5 @@ spec:
   selector:
     app: ff-gateway-api
   type: LoadBalancer
+  loadBalancerIP: 10.4.202.3
+  clusterIP: 10.104.180.95
