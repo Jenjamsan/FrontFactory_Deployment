@@ -15,7 +15,7 @@ spec:
       targetPort: 443
   selector:
     app: ff-gateway-api
-  type: ClusterIP
+  type: LoadBalancer
   clusterIP: 10.0.7.162
   #loadBalancerIP: 20.213.242.133
 
