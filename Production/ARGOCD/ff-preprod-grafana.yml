@@ -9,6 +9,6 @@ spec:
     server: 'https://kubernetes.default.svc'
   source:
     path: Production/HELM/ff_grafana
-    repoURL: 'https://dev.azure.com/ProjetsD2022/Projet%20fin%20de%20cycle%20-%20DI3%20%202022/_git/FrontFactory_Environnements'
+    repoURL: 'https://ProjetsD2022@dev.azure.com/ProjetsD2022/Projet%20fin%20de%20cycle%20-%20DI3%20%202022/_git/FrontFactory_Environnements'
     targetRevision: main
   project: default
