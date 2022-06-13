@@ -4,11 +4,14 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "name": {
+        "type": "string"
+        },
+        "custom": {
           "type": "string"
         }
     },
     "resources": [{
-      "name": "[parameters('name')]",
+      "name": "[concat(parameters('name'),parameters('custom'))]",
       "type": "Microsoft.ContainerService/managedClusters",
       
       "identity": {

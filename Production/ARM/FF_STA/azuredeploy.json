@@ -1,13 +1,20 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {},
+    "parameters": {
+        "name": {
+            "type": "string"
+        },
+        "custom": {
+            "type": "string"
+        }
+    },
     "variables": {},
     "resources": [
         {
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2021-09-01",
-            "name": "storageff",
+            "name": "[concat(parameters('name'), parameters('custom'))]",
             "location": "australiacentral",
             "sku": {
                 "name": "Standard_LRS",
@@ -48,9 +55,9 @@
         {
             "type": "Microsoft.Storage/storageAccounts/blobServices",
             "apiVersion": "2021-09-01",
-            "name": "storageff/default",
+            "name": "[concat(parameters('name'), parameters('custom'), '/default')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', 'storageff')]"
+                "[resourceId('Microsoft.Storage/storageAccounts', concat(parameters('name'),parameters('custom')))]"
             ],
             "sku": {
                 "name": "Standard_LRS",
@@ -81,9 +88,9 @@
         {
             "type": "Microsoft.Storage/storageAccounts/fileServices",
             "apiVersion": "2021-09-01",
-            "name": "storageff/default",
+            "name": "[concat(parameters('name'), parameters('custom'), '/default')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', 'storageff')]"
+                "[resourceId('Microsoft.Storage/storageAccounts', concat(parameters('name'),parameters('custom')))]"
             ],
             "sku": {
                 "name": "Standard_LRS",
@@ -102,9 +109,9 @@
         {
             "type": "Microsoft.Storage/storageAccounts/queueServices",
             "apiVersion": "2021-09-01",
-            "name": "storageff/default",
+            "name": "[concat(parameters('name'), parameters('custom'), '/default')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', 'storageff')]"
+                "[resourceId('Microsoft.Storage/storageAccounts', concat(parameters('name'),parameters('custom')))]"
             ],
             "properties": {
                 "cors": {
@@ -115,9 +122,9 @@
         {
             "type": "Microsoft.Storage/storageAccounts/tableServices",
             "apiVersion": "2021-09-01",
-            "name": "storageff/default",
+            "name": "[concat(parameters('name'), parameters('custom'), '/default')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', 'storageff')]"
+                "[resourceId('Microsoft.Storage/storageAccounts', concat(parameters('name'),parameters('custom')))]"
             ],
             "properties": {
                 "cors": {
@@ -128,10 +135,10 @@
         {
             "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
             "apiVersion": "2021-09-01",
-            "name": "storageff/default/terraform",
+            "name": "[concat(parameters('name'), parameters('custom'), '/default/terraform')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', 'storageff', 'default')]",
-                "[resourceId('Microsoft.Storage/storageAccounts', 'storageff')]"
+                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', concat(parameters('name'),parameters('custom')), 'default')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', concat(parameters('name'),parameters('custom')))]"
             ],
             "properties": {
                 "immutableStorageWithVersioning": {
@@ -145,10 +152,10 @@
         {
             "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
             "apiVersion": "2021-09-01",
-            "name": "storageff/default/terraformqualif",
+            "name": "[concat(parameters('name'), parameters('custom'), '/default/terraformqualif')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', 'storageff', 'default')]",
-                "[resourceId('Microsoft.Storage/storageAccounts', 'storageff')]"
+                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', concat(parameters('name'),parameters('custom')), 'default')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', concat(parameters('name'),parameters('custom')))]"
             ],
             "properties": {
                 "immutableStorageWithVersioning": {
@@ -162,10 +169,10 @@
         {
             "type": "Microsoft.Storage/storageAccounts/fileServices/shares",
             "apiVersion": "2021-09-01",
-            "name": "storageff/default/ffshare",
+            "name": "[concat(parameters('name'), parameters('custom'), '/default/ffshare')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts/fileServices', 'storageff', 'default')]",
-                "[resourceId('Microsoft.Storage/storageAccounts', 'storageff')]"
+                "[resourceId('Microsoft.Storage/storageAccounts/fileServices', concat(parameters('name'),parameters('custom')), 'default')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', concat(parameters('name'),parameters('custom')))]"
             ],
             "properties": {
                 "accessTier": "Hot",
