@@ -4,7 +4,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "name": {
-            "value": "akvff"
+            "value": "akv"
         },
         "location": {
             "value": "westeurope"
@@ -44,7 +44,7 @@
                 "virtualNetworkRules": []
             }
         },
-        "secret1_value": {
+        "custom": {
             "value": "custom"
         }
     }

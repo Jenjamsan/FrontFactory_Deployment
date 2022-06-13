@@ -3,7 +3,10 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "name": {
-            "value": "acrff"
+            "value": "acr"
+        },
+        "custom": {
+            "value": "custom"
         },
         "registryLocation": {
             "value": "westeurope"

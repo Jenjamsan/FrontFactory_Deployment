@@ -6,6 +6,9 @@
         "name": {
             "type": "string"
         },
+        "custom": {
+            "type": "string"
+        },
         "location": {
             "type": "string"
         },
@@ -38,17 +41,13 @@
         },
         "KeyvaultNumber":{
             "type": "string"
-        },
-        "secret1_value": {
-            "type": "string"
         }
-
     },
     "variables": {},
     "resources": [
         {
             "apiVersion": "2019-09-01",
-            "name": "[parameters('name')]",
+            "name": "[concat(parameters('name'), parameters('custom'))]",
             "location": "[parameters('location')]",
             "type": "Microsoft.KeyVault/vaults",
             "properties": {

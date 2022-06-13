@@ -3,7 +3,12 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "name": {
-            "type": "string"
+            "defaultValue": "acr",
+            "type": "String"
+        },
+        "custom": {
+            "defaultValue": "custom",
+            "type": "String"
         },
         "registryLocation": {
             "type": "string"
@@ -27,7 +32,7 @@
     },
     "resources": [
         {
-            "name": "[parameters('name')]",
+            "name": "[concat(parameters('name'), parameters('custom'))]",
             "type": "Microsoft.ContainerRegistry/registries",
             "location": "[parameters('registryLocation')]",
             "apiVersion": "[parameters('registryApiVersion')]",
