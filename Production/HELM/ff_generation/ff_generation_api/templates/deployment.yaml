@@ -28,7 +28,7 @@ spec:
             requests:
               cpu: 250m
               memory: 750Mi
-          command: ["/bin/sh", "-c", "export BASE_ANGULAR_DIR_LOCATION=$(cat /mnt/secrets-store/FF-GENERATION-BASE-ANGULAR-DIR-LOCATION) ;export CLIENT_FRONT_GENERATION_LOCATION=$(cat /mnt/secrets-store/FF-GENERATION-CLIENT-FRONT-GENERATION-LOCATION); export DB_CONNECTION_STRING=$(echo 'Data Source=ff-generation-db-service.ff-production.svc.cluster.local;Initial Catalog=ff_parsing;Persist Security Info=True;User ID=sa;Password='$(cat /mnt/secrets-store/FF-GENERATION-DB-PASSWORD)';'); export JWT_AUTHORITY=$(cat /mnt/secrets-store/FF-JWT-AUTHORITY); export JWT_AUDIENCE=$(cat /mnt/secrets-store/FF-JWT-AUDIENCE); export PARSING_BASE_URL=$(cat /mnt/secrets-store/FF-PARSING-BASE-URL); dotnet FrontFactory.Generator.Presentation.dll;"]
+          command: ["/bin/sh", "-c", "export BASE_ANGULAR_DIR_LOCATION=$(cat /mnt/secrets-store/FF-GENERATION-BASE-ANGULAR-DIR-LOCATION) ;export CLIENT_FRONT_GENERATION_LOCATION=$(cat /mnt/secrets-store/FF-GENERATION-CLIENT-FRONT-GENERATION-LOCATION); export DB_CONNECTION_STRING=$(echo 'Data Source=ff-generation-db-service.ff-production.svc.cluster.local;Initial Catalog=ff_generator;Persist Security Info=True;User ID=sa;Password='$(cat /mnt/secrets-store/FF-GENERATION-DB-PASSWORD)';'); export JWT_AUTHORITY=$(cat /mnt/secrets-store/FF-JWT-AUTHORITY); export JWT_AUDIENCE=$(cat /mnt/secrets-store/FF-JWT-AUDIENCE); export PARSING_BASE_URL=$(cat /mnt/secrets-store/FF-PARSING-BASE-URL); dotnet FrontFactory.Generator.Presentation.dll;"]
           volumeMounts:
             - name: secrets-store02-inline
               mountPath: "/mnt/secrets-store"
