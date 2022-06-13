@@ -14,17 +14,17 @@ spec:
     metadata:
       labels:
         app: ff-parsing-api
-        aadpodidbinding: pod-identity-aksff
+        aadpodidbinding: pod-identity-aksfrontfactoryprod
     spec:
       containers:
         - name: ff-parsing-api
-          image: acrff.azurecr.io/livrables-production/ff_parsing_api:latest
+          image: acrfrontfactoryprod.azurecr.io/livrables-production/ff_parsing_api:latest
           ports:
             - name: http
               containerPort: 80
             - name: https
               containerPort: 443
-          command: ["/bin/sh", "-c", "export JWT_AUTHORITY=$(cat /mnt/secrets-store/FF-JWT-AUTHORITY); export JWT_AUDIENCE=$(cat /mnt/secrets-store/FF-JWT-AUDIENCE); export DB_CONNECTION_STRING=$(echo 'Data Source=ff-parsing-db-service.ff-production.svc.cluster.local;Initial Catalog=ff_parsing;Persist Security Info=True;User ID=sa;Password='$(cat /mnt/secrets-store/FF-PARSING-DB-PASSWORD)';'); dotnet FrontFactory.Parser.Presentation.dll;"]
+          command: ["/bin/sh", "-c", "export GENERATOR_BASE_URL=$(cat /mnt/secrets-store/FF-GENERATOR-BASE-URL); export JWT_AUTHORITY=$(cat /mnt/secrets-store/FF-JWT-AUTHORITY); export JWT_AUDIENCE=$(cat /mnt/secrets-store/FF-JWT-AUDIENCE); export DB_CONNECTION_STRING=$(echo 'Data Source=ff-parsing-db-service.ff-production.svc.cluster.local;Initial Catalog=ff_parsing;Persist Security Info=True;User ID=sa;Password='$(cat /mnt/secrets-store/FF-PARSING-DB-PASSWORD)';'); dotnet FrontFactory.Parser.Presentation.dll;"]
           volumeMounts:
             - name: secrets-store01-inline
               mountPath: "/mnt/secrets-store"
@@ -35,4 +35,4 @@ spec:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: "azure-ffakv-podid"
+              secretProviderClass: "azure-akvfrontfactoryprod-podid"

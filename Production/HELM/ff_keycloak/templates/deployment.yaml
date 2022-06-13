@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: keycloak
-  namespace: ff-production
   labels:
     app: keycloak
 spec:
@@ -19,6 +18,21 @@ spec:
         - name: keycloak
           image: quay.io/keycloak/keycloak:18.0.0
           args: ["start-dev"]
+          env:
+            - name: KC_PROXY
+              value: "edge"
+            - name: KEYCLOAK_ADMIN
+              valueFrom:
+                secretKeyRef:
+                  name: ff-keycloak
+                  key: KEYCLOAK_ADMIN
+                  optional: false
+            - name: KEYCLOAK_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ff-keycloak
+                  key: KEYCLOAK_ADMIN_PASSWORD
+                  optional: false
           ports:
           - name: http
             containerPort: 8080
@@ -28,23 +42,3 @@ spec:
             httpGet:
               path: /realms/master
               port: 8080
-          env:
-          - name: KC_PROXY
-            value: "edge"
-          - name: KEYCLOAK_ADMIN
-            valueFrom:
-              secretKeyRef:
-                name: keycloak
-                key: username
-                optional: false
-          - name: KEYCLOAK_ADMIN_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: keycloak
-                key: password
-                optional: false
-          ports:
-          - name: http
-            containerPort: 8080
-          - name: https
-            containerPort: 8443

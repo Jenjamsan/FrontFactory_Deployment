@@ -19,7 +19,7 @@ spec:
           - 0
       containers:
         - name: grafana
-          image: acrff.azurecr.io/utilitaires/grafana:8.4.4
+          image: acrfrontfactoryprod.azurecr.io/utilitaires/grafana:8.4.4
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000

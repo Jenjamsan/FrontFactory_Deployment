@@ -14,17 +14,17 @@ spec:
     metadata:
       labels:
         app: ff-eshop-api
-        aadpodidbinding: pod-identity-aksff
+        aadpodidbinding: pod-identity-aksfrontfactoryprod
     spec:
       containers:
         - name: ff-eshop-api
-          image: acrff.azurecr.io/livrables-production/ff_eshop_api:latest
+          image: acrfrontfactoryprod.azurecr.io/livrables-production/ff_eshop_api:latest
           ports:
             - name: http
               containerPort: 80
             - name: https
               containerPort: 443
-          command: ["/bin/sh", "-c", "export DB_CONNECTION_STRING=$(echo 'Data Source=ff-eshop-db-service.ff-production.svc.cluster.local;Initial Catalog=ff_parsing;Persist Security Info=True;User ID=sa;Password='$(cat /mnt/secrets-store/FF-ESHOP-DB-PASSWORD)';'); export JWT_AUTHORITY=$(cat /mnt/secrets-store/FF-JWT-AUTHORITY); export JWT_AUDIENCE=$(cat /mnt/secrets-store/FF-JWT-AUDIENCE); export PARSING_BASE_URL=$(cat /mnt/secrets-store/FF-ESHOP-PARSING-BASE-URL); dotnet FrontFactory.Customer.Presentation.dll;"]
+          command: ["/bin/sh", "-c", "export AZURE_DEVOPS_API_BASE_URL=$(cat /mnt/secrets-store/AZURE-DEVOPS-API-BASE-URL); export AZURE_DEVOPS_ORGANIZATION=$(cat /mnt/secrets-store/AZURE-DEVOPS-ORGANIZATION); export AZURE_DEVOPS_PIPELINE_DELETION_ID=$(cat /mnt/secrets-store/AZURE-DEVOPS-PIPELINE-DELETION-ID); export AZURE_DEVOPS_PIPELINE_DEPLOYMENT_ID=$(cat /mnt/secrets-store/AZURE-DEVOPS-PIPELINE-DEPLOYMENT-ID); export DB_CONNECTION_STRING=$(echo 'Data Source=ff-eshop-db-service.ff-production.svc.cluster.local;Initial Catalog=ff_parsing;Persist Security Info=True;User ID=sa;Password='$(cat /mnt/secrets-store/FF-ESHOP-DB-PASSWORD)';'); export JWT_AUTHORITY=$(cat /mnt/secrets-store/FF-JWT-AUTHORITY); export JWT_AUDIENCE=$(cat /mnt/secrets-store/FF-JWT-AUDIENCE); export PARSING_BASE_URL=$(cat /mnt/secrets-store/FF-PARSING-BASE-URL); export GENERATOR_BASE_URL=$(cat /mnt/secrets-store/FF-GENERATOR-BASE-URL); dotnet FrontFactory.Customer.Presentation.dll;"]
           volumeMounts:
             - name: secrets-store05-inline
               mountPath: "/mnt/secrets-store"
@@ -35,4 +35,4 @@ spec:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: "azure-ffakv-podid"
+              secretProviderClass: "azure-akvfrontfactoryprod-podid"

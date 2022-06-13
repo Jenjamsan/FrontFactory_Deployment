@@ -28,13 +28,13 @@ spec:
     metadata:
       labels:
         app: ff-parsing-db
-        aadpodidbinding: pod-identity-aksff
+        aadpodidbinding: pod-identity-aksfrontfactoryprod
     spec:
       securityContext:
         fsGroup: 10001
       containers:
         - name: ff-parsing-db
-          image: acrff.azurecr.io/utilitaires/mssql:latest
+          image: mcr.microsoft.com/mssql/server:2019-latest
           ports:
             - containerPort: 1433
           env:
@@ -53,7 +53,7 @@ spec:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: "azure-ffakv-podid"
+              secretProviderClass: "azure-akvfrontfactoryprod-podid"
         - name: ff-parsing-db-pv
           persistentVolumeClaim:
             claimName: ff-parsing-db-pvc
