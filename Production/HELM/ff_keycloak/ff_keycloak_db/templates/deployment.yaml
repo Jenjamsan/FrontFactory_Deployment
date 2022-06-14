@@ -51,8 +51,8 @@ spec:
                     key: POSTGRES_PASSWORD
                     optional: false             
           ports:
-          - name: postgres
-            containerPort: 5432
+            - containerPort: 5432
+          volumeMounts:
             - name: ff-keycloak-db-pv
               mountPath: "/var/lib/postgresql/data"
       volumes:
