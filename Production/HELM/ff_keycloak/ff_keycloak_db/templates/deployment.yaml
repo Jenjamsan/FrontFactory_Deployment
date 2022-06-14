@@ -47,7 +47,7 @@ spec:
             - mountPath: /var/opt/mssql
               name: ff-keycloak-db-pv
       volumes:
-        - name: secrets-store06-inline
+        - name: secrets-store09-inline
           csi:
             driver: secrets-store.csi.k8s.io
             readOnly: true
