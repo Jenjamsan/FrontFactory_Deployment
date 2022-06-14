@@ -39,8 +39,6 @@ spec:
               value: "keycloak"
             - name: KC_DB_PASSWORD
               value: "Keycloakpassword*"
-            - name: KC_DB
-              value: "keycloak"
             # - name: KC_DB_URL
             #   valueFrom:
             #     secretKeyRef:
