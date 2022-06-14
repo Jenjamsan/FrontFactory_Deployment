@@ -34,7 +34,7 @@ spec:
                   key: KEYCLOAK_ADMIN_PASSWORD
                   optional: false
             - name: KC_DB_URL
-              value: "jdbc:sqlserver://ff-generation-db-service.ff-production.svc.cluster.local/keycloak"
+              value: "jdbc:sqlserver://ff-generation-db-service.ff-production.svc.cluster.local:1433;DatabaseName=keycloak;"
             - name: KC_DB_USERNAME
               value: "keycloak"
             - name: KC_DB_PASSWORD
