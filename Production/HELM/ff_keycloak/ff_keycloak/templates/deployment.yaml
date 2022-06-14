@@ -34,7 +34,7 @@ spec:
                   key: KEYCLOAK_ADMIN_PASSWORD
                   optional: false
             - name: KC_DB_URL
-              value: "jdbc:sqlserver://10.0.238.122:1433"
+              value: "jdbc:sqlserver://10.0.238.122/keycloak"
             - name: KC_DB_USERNAME
               value: "keycloak"
             - name: KC_DB_PASSWORD
