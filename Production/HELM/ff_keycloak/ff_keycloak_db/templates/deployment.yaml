@@ -27,29 +27,35 @@ spec:
     metadata:
       labels:
         app: keycloak-db
-        aadpodidbinding: pod-identity-aksff
     spec:
       containers:
         - name: keycloak-db
           image: postgres:10.1
           env:
+            - name: POSTGRES_DB
+                valueFrom:
+                  secretKeyRef:
+                    name: ff-keycloak
+                    key: POSTGRES_DB
+                    optional: false
+            - name: POSTGRES_USER
+                valueFrom:
+                  secretKeyRef:
+                    name: ff-keycloak
+                    key: POSTGRES_USER
+                    optional: false
+            - name: POSTGRES_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: ff-keycloak
+                    key: POSTGRES_PASSWORD
+                    optional: false             
           ports:
           - name: postgres
             containerPort: 5432
-          command: ["/bin/sh", "-c", "export POSTGRES_DB=$(cat /mnt/secrets-store/FF-KEYCLOAK-POSTGRES-DB); export POSTGRES_USER=$(cat /mnt/secrets-store/FF-KEYCLOAK-POSTGRES-USER); export POSTGRES_PASSWORD=$(cat /mnt/secrets-store/FF-KEYCLOAK-POSTGRES-PASSWORD); /usr/lib/postgresql/10.1/bin/postgres -D /var/lib/postgresql/10.1/main -c config_file=/etc/postgresql/10.1/main/postgresql.conf;"]
-          volumeMounts:
-            - name: secrets-store09-inline
-              mountPath: "/mnt/secrets-store"
-              readOnly: true
             - name: ff-keycloak-db-pv
               mountPath: "/var/lib/postgresql/data"
       volumes:
-        - name: secrets-store09-inline
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: "azure-akvfrontfactoryprod-podid"
         - name: ff-keycloak-db-pv
           persistentVolumeClaim:
             claimName: ff-keycloak-db-pvc
