@@ -4,8 +4,8 @@ metadata:
   name: ff-generation-db-service
   namespace: ff-production
 spec:
-  type: ClusterIP
-  #type: LoadBalancer
+  #type: ClusterIP
+  type: LoadBalancer
   selector:
     app: ff-generation-db
   ports:
