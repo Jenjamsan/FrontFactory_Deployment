@@ -49,12 +49,14 @@ spec:
                   secretKeyRef:
                     name: ff-keycloak
                     key: POSTGRES_PASSWORD
-                    optional: false             
+                    optional: false
+            - name: PGDATA
+              value: "/var/lib/postgresql/data/db-files/"         
           ports:
             - containerPort: 5432
           volumeMounts:
             - name: ff-keycloak-db-pv
-              mountPath: "/var/lib/postgresql/data"
+              mountPath: "/var/lib/postgresql/data/db-files"
       volumes:
         - name: ff-keycloak-db-pv
           persistentVolumeClaim:
