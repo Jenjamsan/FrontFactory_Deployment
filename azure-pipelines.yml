@@ -61,7 +61,7 @@ steps:
     azureResourceManagerConnection: $(azureResourceManagerConnection2)
     subscriptionId: $(subscriptionId2)
     action: 'Create Or Update Resource Group'
-    resourceGroupName: $(Azure_ResourceGroup)$(customname)
+    resourceGroupName: $(Azure_ResourceGroup2)$(customname)
     location: 'West Europe'
     templateLocation: 'Linked artifact'
     csmFile: 'Production/ARM/FF_AKS/azuredeploy.json'
