@@ -6,7 +6,7 @@ metadata:
     app: keycloak
 spec:
   ports:
-    - port: 80
+    - port: 8080
       name: http
       targetPort: 8080
     - port: 8443
@@ -15,4 +15,3 @@ spec:
   selector:
     app: keycloak
   type: LoadBalancer
-  clusterIP: 10.0.7.164
