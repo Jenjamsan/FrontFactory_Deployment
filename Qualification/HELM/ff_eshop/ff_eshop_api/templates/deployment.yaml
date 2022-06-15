@@ -72,11 +72,17 @@ spec:
                   name: ff-eshop-api
                   key: AZURE_DEVOPS_PROJECT
                   optional: false
-            - name: AZURE_DEVOPS_PIPELINE_ID
+            - name: AZURE_DEVOPS_PIPELINE_DEPLOYMENT_ID
               valueFrom:
                 secretKeyRef:
                   name: ff-eshop-api
-                  key: AZURE_DEVOPS_PIPELINE_ID
+                  key: AZURE_DEVOPS_PIPELINE_DEPLOYMENT_ID
+                  optional: false
+            - name: AZURE_DEVOPS_PIPELINE_DELETION_ID
+              valueFrom:
+                secretKeyRef:
+                  name: ff-eshop-api
+                  key: AZURE_DEVOPS_PIPELINE_DELETION_ID
                   optional: false
             - name: AZURE_DEVOPS_AUTH_HEADER
               valueFrom:
