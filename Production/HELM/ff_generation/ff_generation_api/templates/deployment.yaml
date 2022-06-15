@@ -42,7 +42,7 @@ spec:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: "azure-akvfrontfactoryprod-podid"
+              secretProviderClass: "azure-kvaultff-podid"
         - name: ffshare
           azureFile:
             secretName: ffshare-secret
