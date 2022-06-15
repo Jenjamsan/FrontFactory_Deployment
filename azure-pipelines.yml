@@ -12,7 +12,7 @@ steps:
   name: Part0_ASA
   inputs:
     deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: $(azureResourceManagerConnection2)
+    azureResourceManagerConnection: $(azureResourceManagerConnection)
     subscriptionId: $(subscriptionId)
     action: 'Create Or Update Resource Group'
     resourceGroupName: $(Azure_ResourceGroup)$(customname)
@@ -27,7 +27,7 @@ steps:
   name: Part1_Keyvault
   inputs:
     deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: $(azureResourceManagerConnection2)
+    azureResourceManagerConnection: $(azureResourceManagerConnection)
     subscriptionId: $(subscriptionId)
     action: 'Create Or Update Resource Group'
     resourceGroupName: $(Azure_ResourceGroup)$(customname)
@@ -42,7 +42,7 @@ steps:
   name: Part2_A_Container_Registry
   inputs:
      deploymentScope: 'Resource Group'
-     azureResourceManagerConnection: $(azureResourceManagerConnection2)
+     azureResourceManagerConnection: $(azureResourceManagerConnection)
      subscriptionId: $(subscriptionId)
      action: 'Create Or Update Resource Group'
      resourceGroupName: $(Azure_ResourceGroup)$(customname)
@@ -58,7 +58,7 @@ steps:
   name: Part3_AKS
   inputs:
     deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: $(azureResourceManagerConnection)
+    azureResourceManagerConnection: $(azureResourceManagerConnection2)
     subscriptionId: $(subscriptionId2)
     action: 'Create Or Update Resource Group'
     resourceGroupName: $(Azure_ResourceGroup)$(customname2)
