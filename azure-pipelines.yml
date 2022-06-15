@@ -61,12 +61,12 @@ steps:
     azureResourceManagerConnection: $(azureResourceManagerConnection2)
     subscriptionId: $(subscriptionId2)
     action: 'Create Or Update Resource Group'
-    resourceGroupName: $(Azure_ResourceGroup2)$(customname)
+    resourceGroupName: $(Azure_ResourceGroup2)$(customname2)
     location: 'West Europe'
     templateLocation: 'Linked artifact'
     csmFile: 'Production/ARM/FF_AKS/azuredeploy.json'
     csmParametersFile: 'Production/ARM/FF_AKS/azuredeploy.parameters.json'
-    overrideParameters: -custom $(customname)
+    overrideParameters: -custom $(customname2)
     deploymentMode: 'Incremental'
 
 # - task: AzureCLI@2
