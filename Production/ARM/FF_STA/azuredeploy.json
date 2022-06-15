@@ -15,7 +15,7 @@
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2021-09-01",
             "name": "[concat(parameters('name'), parameters('custom'))]",
-            "location": "australiacentral",
+            "location": "westeurope",
             "sku": {
                 "name": "Standard_LRS",
                 "tier": "Standard"
