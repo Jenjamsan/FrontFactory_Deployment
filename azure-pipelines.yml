@@ -58,15 +58,15 @@ steps:
   name: Part3_AKS
   inputs:
     deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: $(azureResourceManagerConnection2)
-    subscriptionId: $(subscriptionId2)
+    azureResourceManagerConnection: $(azureResourceManagerConnection)
+    subscriptionId: $(subscriptionId)
     action: 'Create Or Update Resource Group'
-    resourceGroupName: $(Azure_ResourceGroup)$(customname2)
+    resourceGroupName: $(Azure_ResourceGroup)$(customname)
     location: 'West Europe'
     templateLocation: 'Linked artifact'
     csmFile: 'Production/ARM/FF_AKS/azuredeploy.json'
     csmParametersFile: 'Production/ARM/FF_AKS/azuredeploy.parameters.json'
-    overrideParameters: -custom $(customname2)
+    overrideParameters: -custom $(customname)
     deploymentMode: 'Incremental'
 
 # - task: AzureCLI@2
