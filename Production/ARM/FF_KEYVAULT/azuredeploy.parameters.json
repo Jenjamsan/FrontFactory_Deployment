@@ -4,7 +4,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "name": {
-            "value": "akvault"
+            "value": "akvlt"
         },
         "location": {
             "value": "westeurope"
