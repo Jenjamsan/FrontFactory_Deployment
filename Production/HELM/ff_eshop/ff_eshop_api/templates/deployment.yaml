@@ -14,7 +14,7 @@ spec:
     metadata:
       labels:
         app: ff-eshop-api
-        aadpodidbinding: pod-identity-aksff
+        aadpodidbinding: pod-identity-aksfrontfactoryprodv2
     spec:
       containers:
         - name: ff-eshop-api
