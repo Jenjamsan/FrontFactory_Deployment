@@ -53,7 +53,7 @@ spec:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: "azure-akvfrontfactoryprodv2-podid"
+              secretProviderClass: "azure-kvaultff-podid"
         - name: ff-generation-db-pv
           persistentVolumeClaim:
             claimName: ff-generation-db-pvc
