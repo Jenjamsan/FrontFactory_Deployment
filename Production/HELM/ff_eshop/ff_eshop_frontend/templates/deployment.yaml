@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: ff-front
-        image: acrfrontfactoryprod.azurecr.io/livrables-production/front:latest
+        image: acrfrontfactoryprodv2.azurecr.io/livrables-production/front:latest
         ports:
            - name: http
              containerPort: 80
