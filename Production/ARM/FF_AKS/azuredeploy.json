@@ -18,7 +18,7 @@
           "type": "SystemAssigned" 
       },
       "apiVersion": "2021-03-01",
-      "location": "australiacentral",
+      "location": "westeurope",
       "properties": {
         "kubernetesVersion": "1.22.6",
         "enableRBAC": true,
@@ -27,7 +27,7 @@
           {
             "name": "agentpool",
             "count": 1,
-            "vmSize": "Standard_B2ms",
+            "vmSize": "Standard_E2as_v5",
             "osType": "Linux",
             "storageProfile": "ManagedDisks",
             "mode": "System"
