@@ -15,4 +15,3 @@ spec:
   selector:
     app: keycloak
   type: LoadBalancer
-  clusterIP: 10.0.7.164
