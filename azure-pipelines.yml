@@ -82,17 +82,14 @@ steps:
       az extension update --name aks-preview
       export AKS_NAME=aks$2
       export RG=$1$2
-      export AKV=akv$2
+      export AKV=akvault$2
 
        export IDENT_NAME="app-identity-$AKS_NAME" 
-       export POD_IDENTITY_NAME="pod-identity-aksff"
+       export POD_IDENTITY_NAME="pod-identity-$AKS_NAME"
        export POD_IDENTITY_NAMESPACE="ff-production"      
        az aks enable-addons --addons azure-keyvault-secrets-provider --name $AKS_NAME --resource-group $RG
-      
-       az aks update -g $RG -n $AKS_NAME --enable-pod-identity --enable-pod-identity-with-kubenet
-      
-       echo "3"
        az feature register --name EnablePodIdentityPreview --namespace Microsoft.ContainerService
+       az aks update -g $RG -n $AKS_NAME --enable-pod-identity --enable-pod-identity-with-kubenet
       
        echo "4"
        az provider register -n Microsoft.ContainerService
