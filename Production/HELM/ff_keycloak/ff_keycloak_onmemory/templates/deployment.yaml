@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: keycloak
+  name: keycloak2
   labels:
-    app: keycloak
+    app: keycloak2
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: keycloak
+      app: keycloak2
   template:
     metadata:
       labels:
-        app: keycloak
+        app: keycloak2
     spec:
       containers:
-      - name: keycloak
+      - name: keycloak2
         image: quay.io/keycloak/keycloak:18.0.0
         args: ["start-dev"]
         env:
