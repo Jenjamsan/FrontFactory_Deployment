@@ -7,18 +7,7 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: AzureCLI@2
-  inputs:
-    azureSubscription: $(azureResourceManagerConnection)
-    scriptType: 'bash'
-    scriptLocation: 'inlineScript'
-    arguments: $(Azure_login) $(Azure_password)
-    inlineScript: |
-      az login -u $1 -p $2
-      az provider register -n Microsoft.ContainerService
-      az provider register -n Microsoft.ContainerRegistry
-      az provider register -n Microsoft.KeyVault
-      az provider register -n Microsoft.Storage
+
 - task: AzureResourceManagerTemplateDeployment@3
   name: Part0_ASA
   inputs:
@@ -69,8 +58,8 @@ steps:
   name: Part3_AKS
   inputs:
     deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: $(azureResourceManagerConnection)
-    subscriptionId: $(subscriptionId)
+    azureResourceManagerConnection: $(azureResourceManagerConnection2)
+    subscriptionId: $(subscriptionId2)
     action: 'Create Or Update Resource Group'
     resourceGroupName: $(Azure_ResourceGroup)$(customname)
     location: 'West Europe'
@@ -80,76 +69,76 @@ steps:
     overrideParameters: -custom $(customname)
     deploymentMode: 'Incremental'
 
-- task: AzureCLI@2
-  name: cli
-  continueOnError: true
-  inputs:
-    azureSubscription: $(azureResourceManagerConnection)
-    scriptType: 'bash'
-    scriptLocation: 'inlineScript'
-    arguments: '$(Azure_ResourceGroup) $(customname)'
-    inlineScript: |
-      az extension add --name aks-preview
-      az extension update --name aks-preview
-      export AKS_NAME=aks$2
-      export RG=$1$2
-      export AKV=akv$2
+# - task: AzureCLI@2
+#   name: cli
+#   continueOnError: true
+#   inputs:
+#     azureSubscription: $(azureResourceManagerConnection)
+#     scriptType: 'bash'
+#     scriptLocation: 'inlineScript'
+#     arguments: '$(Azure_ResourceGroup) $(customname)'
+#     inlineScript: |
+#       az extension add --name aks-preview
+#       az extension update --name aks-preview
+#       export AKS_NAME=aks$2
+#       export RG=$1$2
+#       export AKV=akv$2
 
-       export IDENT_NAME="app-identity-$AKS_NAME" 
-       export POD_IDENTITY_NAME="pod-identity-$AKS_NAME"
-       export POD_IDENTITY_NAMESPACE="ff-production"      
-       az aks enable-addons --addons azure-keyvault-secrets-provider --name $AKS_NAME --resource-group $RG
+#        export IDENT_NAME="app-identity-$AKS_NAME" 
+#        export POD_IDENTITY_NAME="pod-identity-aksff"
+#        export POD_IDENTITY_NAMESPACE="ff-production"      
+#        az aks enable-addons --addons azure-keyvault-secrets-provider --name $AKS_NAME --resource-group $RG
       
-       az aks update -g $RG -n $AKS_NAME --enable-pod-identity --enable-pod-identity-with-kubenet
+#        az aks update -g $RG -n $AKS_NAME --enable-pod-identity --enable-pod-identity-with-kubenet
       
-       echo "3"
-       az feature register --name EnablePodIdentityPreview --namespace Microsoft.ContainerService
+#        echo "3"
+#        az feature register --name EnablePodIdentityPreview --namespace Microsoft.ContainerService
       
-       echo "4"
-       az provider register -n Microsoft.ContainerService
+#        echo "4"
+#        az provider register -n Microsoft.ContainerService
       
-       echo "5"
-       az identity create --resource-group $RG --name $IDENT_NAME
+#        echo "5"
+#        az identity create --resource-group $RG --name $IDENT_NAME
       
-       echo "6"
-       export IDENTITY_CLIENT_ID="$(az identity show -g $RG -n $IDENT_NAME --query clientId -otsv)"
+#        echo "6"
+#        export IDENTITY_CLIENT_ID="$(az identity show -g $RG -n $IDENT_NAME --query clientId -otsv)"
       
-       echo "7"
-       export IDENTITY_RESOURCE_ID="$(az identity show -g $RG -n $IDENT_NAME --query id -otsv)"
+#        echo "7"
+#        export IDENTITY_RESOURCE_ID="$(az identity show -g $RG -n $IDENT_NAME --query id -otsv)"
       
-       echo "8"
-       export NODE_GROUP="$(az aks show -g $RG -n $AKS_NAME --query nodeResourceGroup -otsv)"
+#        echo "8"
+#        export NODE_GROUP="$(az aks show -g $RG -n $AKS_NAME --query nodeResourceGroup -otsv)"
       
-       echo "9"
-       export NODES_RESOURCE_ID="$(az group show -n $NODE_GROUP -o tsv --query "id")"
+#        echo "9"
+#        export NODES_RESOURCE_ID="$(az group show -n $NODE_GROUP -o tsv --query "id")"
       
-       echo "10"
-       az login -u $(Azure_login) -p $(Azure_password) 
-       az role assignment create --role "Virtual Machine Contributor" --assignee-object-id $IDENTITY_CLIENT_ID --assignee-principal-type ServicePrincipal --scope $NODES_RESOURCE_ID
+#        echo "10"
+#        az login -u $(Azure_login) -p $(Azure_password) 
+#        az role assignment create --role "Virtual Machine Contributor" --assignee-object-id $IDENTITY_CLIENT_ID --assignee-principal-type ServicePrincipal --scope $NODES_RESOURCE_ID
       
-       echo "11"
-       az aks pod-identity add --resource-group $RG --cluster-name $AKS_NAME --namespace $POD_IDENTITY_NAMESPACE --name $POD_IDENTITY_NAME --identity-resource-id $IDENTITY_RESOURCE_ID
+#        echo "11"
+#        az aks pod-identity add --resource-group $RG --cluster-name $AKS_NAME --namespace $POD_IDENTITY_NAMESPACE --name $POD_IDENTITY_NAME --identity-resource-id $IDENTITY_RESOURCE_ID
       
-       echo "12"
-       az keyvault set-policy -n $AKV --key-permissions get --spn $IDENTITY_CLIENT_ID
-       az keyvault set-policy -n $AKV --secret-permissions get --spn $IDENTITY_CLIENT_ID
-       az keyvault set-policy -n $AKV --certificate-permissions get --spn $IDENTITY_CLIENT_ID
+#        echo "12"
+#        az keyvault set-policy -n $AKV --key-permissions get --spn $IDENTITY_CLIENT_ID
+#        az keyvault set-policy -n $AKV --secret-permissions get --spn $IDENTITY_CLIENT_ID
+#        az keyvault set-policy -n $AKV --certificate-permissions get --spn $IDENTITY_CLIENT_ID
        
-- task: AzureCLI@2
-  name: cli4
-  displayName: AKS_to_ACR_Link
-  inputs:
-    azureSubscription: $(azureResourceManagerConnection)
-    scriptType: 'bash'
-    scriptLocation: 'inlineScript'
-    arguments: '$(Azure_ResourceGroup) $(Azure_login) $(Azure_password) $(customname)'
-    inlineScript: |
-      ACR_name=$(az acr list --query [].name -otsv -g $1$4)
+# - task: AzureCLI@2
+#   name: cli4
+#   displayName: AKS_to_ACR_Link
+#   inputs:
+#     azureSubscription: $(azureResourceManagerConnection)
+#     scriptType: 'bash'
+#     scriptLocation: 'inlineScript'
+#     arguments: '$(Azure_ResourceGroup) $(Azure_login) $(Azure_password) $(customname)'
+#     inlineScript: |
+#       ACR_name=$(az acr list --query [].name -otsv -g $1$4)
       
-      AKS_name=$(az aks list --query [].name -otsv -g $1$4)
+#       AKS_name=$(az aks list --query [].name -otsv -g $1$4)
 
-      az aks get-credentials --resource-group $1$4 --name $AKS_name
+#       az aks get-credentials --resource-group $1$4 --name $AKS_name
 
-      az login -u $2 -p $3
-      echo "AKS - ACR Link"
-      az aks update -n $AKS_name -g $1$4 --attach-acr $ACR_name
+#       az login -u $2 -p $3
+#       echo "AKS - ACR Link"
+#       az aks update -n $AKS_name -g $1$4 --attach-acr $ACR_name
