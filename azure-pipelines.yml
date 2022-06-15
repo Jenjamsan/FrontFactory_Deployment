@@ -12,7 +12,9 @@ steps:
     azureSubscription: $(azureResourceManagerConnection)
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
+    arguments: $(Azure_login) $(Azure_password)
     inlineScript: |
+      az login -u $1 -p $2
       az provider register -n Microsoft.ContainerService
       az provider register -n Microsoft.ContainerRegistry
       az provider register -n Microsoft.KeyVault
