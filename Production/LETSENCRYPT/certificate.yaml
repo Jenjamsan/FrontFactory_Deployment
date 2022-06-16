@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: ff-certificate
+  namespace: ff-production
+spec:
+  dnsNames:
+  - '*.frontfactory.fr'
+  - 'frontfactory.fr'
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+  secretName: ff-tls

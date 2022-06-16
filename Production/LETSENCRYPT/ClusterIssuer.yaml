@@ -2,18 +2,22 @@ apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
   name: letsencrypt
+  namespace: cert-manager
 spec:
   acme:
-    # You must replace this email address with your own.
-    # Let's Encrypt will use this to contact you about expiring
-    # certificates, and issues related to your account.
-    email: 
-    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: 'benjamin.souhait@diiage.org'
     privateKeySecretRef:
-      # Secret resource that will be used to store the account's private key.
-      name: example-issuer-account-key
-    # Add a single challenge solver, HTTP01 using nginx
+      name: letsencrypt-account-key
     solvers:
-    - http01:
-        ingress:
-          class: nginx
+    - dns01:
+        webhook:
+          groupName: 'letsencrypt'
+          solverName: ovh
+          config:
+            endpoint: ovh-eu
+            applicationKey: 'f157e03f72cece3b'
+            applicationSecretRef:
+              key: applicationSecret
+              name: ovh-credentials
+            consumerKey: '37697dd21d6cdff5237bf5624543ea80'
