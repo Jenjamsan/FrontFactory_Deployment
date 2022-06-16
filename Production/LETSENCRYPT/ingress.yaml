@@ -16,6 +16,7 @@ spec:
     - insight.frontfactory.fr
     - www.frontfactory.fr
     - frontfactory.fr
+    - cd.frontfactory.fr
     secretName: ff-tls
   rules:
   - host: api.frontfactory.fr
@@ -36,6 +37,16 @@ spec:
         backend:
           service:
             name: keycloak
+            port:
+              number: 80
+  - host: cd.frontfactory.fr
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: argocd-server
             port:
               number: 80
   - host: frontfactory.fr
