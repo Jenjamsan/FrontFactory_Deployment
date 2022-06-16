@@ -25,6 +25,9 @@ spec:
             - containerPort: 3000
               name: http-grafana
               protocol: TCP
+            - containerPort: 3001
+              name: https-grafana
+              protocol: TCP
           readinessProbe:
             failureThreshold: 3
             httpGet:
@@ -54,9 +57,12 @@ metadata:
   name: grafana
 spec:
   ports:
-    - port: 443
+    - port: 80
       name: http
       targetPort: http-grafana
+    - port: 443
+      name: https
+      targetPort: https-grafana
   selector:
     app: grafana
   sessionAffinity: None
