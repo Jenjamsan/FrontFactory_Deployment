@@ -48,5 +48,11 @@ spec:
                   name: ff-parsing-api
                   key: GENERATOR_BASE_URL
                   optional: false
+            - name: CUSTOMER_BASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: ff-parsing-api
+                  key: CUSTOMER_BASE_URL
+                  optional: false
       imagePullSecrets:
         - name: regcred
