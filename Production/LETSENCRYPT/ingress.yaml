@@ -1,0 +1,70 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ff-ingress
+  namespace: ff-production
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    cert-manager.io/issuer: letsencrypt
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - api.frontfactory.fr
+    - auth.frontfactory.fr
+    - insight.frontfactory.fr
+    - www.frontfactory.fr
+    - frontfactory.fr
+    secretName: ff-tls
+  rules:
+  - host: api.frontfactory.fr
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ff-gateway-api-service
+            port:
+              number: 80
+  - host: auth.frontfactory.fr
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: keycloak
+            port:
+              number: 80
+  - host: frontfactory.fr
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ff-front-service
+            port:
+              number: 80
+  - host: www.frontfactory.fr
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ff-front-service
+            port:
+              number: 80
+  - host: insight.frontfactory.fr
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: grafana
+            port:
+              number: 3000
