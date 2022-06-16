@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: ff-generation-api
-          image: acrfrontfactoryprod.azurecr.io/livrables-production/ff_generation_api:latest
+          image: acrfrontfactoryprodv2.azurecr.io/livrables-production/ff_generation_api:latest
           ports:
             - name: http
               containerPort: 80
