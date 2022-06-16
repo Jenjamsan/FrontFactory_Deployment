@@ -54,7 +54,7 @@ metadata:
   name: grafana
 spec:
   ports:
-    - port: 3000
+    - port: 80
       name: http
       targetPort: http-grafana
   selector:
