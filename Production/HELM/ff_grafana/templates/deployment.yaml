@@ -1,3 +1,19 @@
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: ff-grafana-pvc
+  annotations:
+    volume.beta.kubernetes.io/storage-class: azure-disk
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 6Gi
+---
+
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -25,6 +41,9 @@ spec:
             - containerPort: 3000
               name: http-grafana
               protocol: TCP
+          volumeMounts:
+          - name: grafana-persistent-storage-store
+            mountPath: /var/lib/grafana/
           readinessProbe:
             failureThreshold: 3
             httpGet:
@@ -47,6 +66,11 @@ spec:
             requests:
               cpu: 250m
               memory: 750Mi
+          volumes:
+      volumes:
+      - name: grafana-persistent-storage-store
+        persistentVolumeClaim:
+          claimName: ff-grafana-pvc
 ---
 apiVersion: v1
 kind: Service
