@@ -13,6 +13,9 @@ spec:
       labels:
         app: ff-jenkins
     spec:
+      securityContext:
+        fsGroup: 1000 
+        runAsUser: 0
       containers:
       - name: ff-jenkins
         image: jenkins/jenkins:lts-jdk11
