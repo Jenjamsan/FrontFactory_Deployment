@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: ff-jenkins-pvc
-  namespace: jenkins
+  namespace: ff-qualification
 spec:
   accessModes:
     - ReadWriteOnce
