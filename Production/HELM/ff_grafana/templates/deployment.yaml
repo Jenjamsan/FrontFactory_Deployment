@@ -62,10 +62,6 @@ spec:
             tcpSocket:
               port: 3000
             timeoutSeconds: 1
-          resources:
-            requests:
-              cpu: 250m
-              memory: 750Mi
           volumes:
       volumes:
       - name: grafana-persistent-storage-store
