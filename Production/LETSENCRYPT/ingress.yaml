@@ -17,6 +17,7 @@ spec:
     - www.frontfactory.fr
     - frontfactory.fr
     - cd.frontfactory.fr
+    - jenkins.frontfactory.fr
     secretName: ff-tls
   rules:
   - host: api.frontfactory.fr
