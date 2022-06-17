@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ff-jenkins
+  namespace: jenkins
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ff-jenkins
+  template:
+    metadata:
+      labels:
+        app: ff-jenkins
+    spec:
+      containers:
+      - name: ff-jenkins
+        image: jenkins/jenkins:lts-jdk11
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: ff-jenkins-pv
+          mountPath: /var/jenkins_home
+      volumes:
+      - name: ff-jenkins-pv
+        persistentVolumeClaim:
+          claimName: ff-jenkins-pvc
