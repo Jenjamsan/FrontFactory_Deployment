@@ -24,4 +24,4 @@ spec:
       volumes:
       - name: ff-jenkins-pv
         persistentVolumeClaim:
-          claimName: ff-jenkins-pvc
+          claimName: ff-grafana-pvc
