@@ -17,6 +17,7 @@ spec:
     - www.frontfactory.fr
     - frontfactory.fr
     - cd.frontfactory.fr
+    - jenkins.frontfactory.fr
     secretName: ff-tls
   rules:
   - host: api.frontfactory.fr
@@ -77,5 +78,15 @@ spec:
         backend:
           service:
             name: grafana
+            port:
+              number: 80
+  - host: jenkins.frontfactory.fr
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ff-jenkins-service
             port:
               number: 80
