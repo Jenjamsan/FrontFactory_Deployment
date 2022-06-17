@@ -4,7 +4,6 @@ metadata:
   name: ff-jenkins-service
   namespace: ff-production
 spec:
-  type: LoadBalancer
   ports:
   - port: 80
     targetPort: 8080
