@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ff-parsing-migration
+  namespace: ff-production
+  labels:
+    app: ff-parsing-migration
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ff-parsing-migration
+  template:
+    metadata:
+      labels:
+        app: ff-parsing-migration
+        aadpodidbinding: pod-identity-aksfrontfactoryprodv2
+    spec:
+      containers:
+        - name: ff-parsing-migration
+          image: acrfrontfactoryprodv2.azurecr.io/livrables-production/ff_parsing_migration:latest
+          command: ["/bin/sh", "-c", "export DB_CONNECTION_STRING=$(echo 'Data Source=ff-parsing-db-service.ff-production.svc.cluster.local;Initial Catalog=ff_parsing;Persist Security Info=True;User ID=sa;Password='$(cat /mnt/secrets-store/FF-PARSING-DB-PASSWORD)';'); cd /src/FrontFactory.Parser.Persistence && /root/.dotnet/tools/dotnet-ef database update"]
+          volumeMounts:
+            - name: secrets-store01-inline
+              mountPath: "/mnt/secrets-store"
+              readOnly: true
+      volumes:
+        - name: secrets-store01-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "azure-kvaultff-podid"
