@@ -19,7 +19,7 @@ spec:
       containers:
         - name: ff-eshop-migration
           image: acrfrontfactoryprodv2.azurecr.io/livrables-production/ff_eshop_migration:latest
-          command: ["/bin/sh", "-c", "export DB_CONNECTION_STRING=$(echo 'Data Source=ff-eshop-db-service.ff-production.svc.cluster.local;Initial Catalog=ff_eshop;Persist Security Info=True;User ID=sa;Password='$(cat /mnt/secrets-store/FF-ESHOP-DB-PASSWORD)';'); cd /src/FrontFactory.Parser.Persistence && /root/.dotnet/tools/dotnet-ef database update"]
+          command: ["/bin/sh", "-c", "export DB_CONNECTION_STRING=$(echo 'Data Source=ff-eshop-db-service.ff-production.svc.cluster.local;Initial Catalog=ff_eshop;Persist Security Info=True;User ID=sa;Password='$(cat /mnt/secrets-store/FF-ESHOP-DB-PASSWORD)';'); cd /src/FrontFactory.Customer.Persistence && /root/.dotnet/tools/dotnet-ef database update;"]
           volumeMounts:
             - name: secrets-store10-inline
               mountPath: "/mnt/secrets-store"
