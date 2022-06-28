@@ -1,26 +1,49 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ff-jenkins
+  name: jenkins-deployment
   namespace: ff-qualification
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ff-jenkins
+      app: jenkins
   template:
     metadata:
       labels:
-        app: ff-jenkins
+        app: jenkins
     spec:
+      serviceAccountName: jenkins-admin
+      securityContext:
+            fsGroup: 1000 
+            runAsUser: 1000
       containers:
-      - name: ff-jenkins
-        image: jenkins/jenkins:lts-jdk11
-        ports:
-        - containerPort: 8080
-        volumeMounts:
-        - name: ff-jenkins-pv
-          mountPath: /var/jenkins_home
+        - name: jenkins
+          image: jenkins/jenkins:lts
+          ports:
+            - name: httpport
+              containerPort: 8080
+            - name: jnlpport
+              containerPort: 50000
+          livenessProbe:
+            httpGet:
+              path: "/login"
+              port: 8080
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: "/login"
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          volumeMounts:
+          - name: ff-jenkins-pv
+            mountPath: /var/jenkins_home
       volumes:
       - name: ff-jenkins-pv
         persistentVolumeClaim:

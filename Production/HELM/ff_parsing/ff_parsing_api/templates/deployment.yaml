@@ -24,7 +24,7 @@ spec:
               containerPort: 80
             - name: https
               containerPort: 443
-          command: ["/bin/sh", "-c", "export CUSTOMER_BASE_URL=$(cat /mnt/secrets-store/FF-CUSTOMER-BASE-URL); export GENERATOR_BASE_URL=$(cat /mnt/secrets-store/FF-GENERATOR-BASE-URL); export JWT_AUTHORITY=$(cat /mnt/secrets-store/FF-JWT-AUTHORITY); export JWT_AUDIENCE=$(cat /mnt/secrets-store/FF-JWT-AUDIENCE); export DB_CONNECTION_STRING=$(echo 'Data Source=ff-parsing-db-service.ff-production.svc.cluster.local;Initial Catalog=ff_parsing;Persist Security Info=True;User ID=sa;Password='$(cat /mnt/secrets-store/FF-PARSING-DB-PASSWORD)';'); dotnet FrontFactory.Parser.Presentation.dll;"]
+          command: ["/bin/sh", "-c", "export CUSTOMER_BASE_URL=$(cat /mnt/secrets-store/FF-CUSTOMER-BASE-URL); export GENERATOR_BASE_URL=$(cat /mnt/secrets-store/FF-GENERATOR-BASE-URL); export JWT_AUTHORITY=$(cat /mnt/secrets-store/FF-JWT-AUTHORITY); export JWT_AUDIENCE=$(cat /mnt/secrets-store/FF-JWT-AUDIENCE); export DB_CONNECTION_STRING=$(echo 'Data Source=ff-parsing-db-service.ff-production.svc.cluster.local;Initial Catalog=ff_parsing;Persist Security Info=True;User ID=sa;Password='$(cat /mnt/secrets-store/FF-PARSING-DB-PASSWORD)';'); dotnet ef database update; dotnet FrontFactory.Parser.Presentation.dll;"]
           volumeMounts:
             - name: secrets-store01-inline
               mountPath: "/mnt/secrets-store"
